@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">LechugaPro</string>
+    <string name="agregar_nuevo_ciclo_produccion">Agregar nuevo ciclo de producción</string>
+    <string name="fecha_de_siembra_label">Siembra:</string>
+    <string name="fecha_estimada_cosecha_label">Cosecha Est.:</string>
+    <string name="selecciona_una_fecha">Selecciona una fecha</string>
+    <string name="error_nombre_variedad_vacios">El nombre del ciclo y la variedad no pueden estar vacíos</string>
+    <string name="ciclo_guardado_exito">Ciclo guardado con éxito</string>
+    <string name="ciclo_actualizado_exito">Ciclo actualizado con éxito</string>
+    <string-array name="estados_produccion">
+        <item>Planificado</item>
+        <item>En Crecimiento</item>
+        <item>Cosechado</item>
+        <item>Cancelado</item>
+    </string-array>
+    <string-array name="variedades_lechuga">
+        <item>Romana</item>
+        <item>Iceberg</item>
+        <item>Trocadero</item>
+        <item>Hoja de Roble</item>
+        <item>Maravilla</item>
+    </string-array>
+</resources>
