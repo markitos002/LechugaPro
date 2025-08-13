@@ -68,6 +68,10 @@ dependencies {
     // WorkManager (recordatorios)
     implementation(libs.androidx.work.runtime.ktx)
 
+    // Images (SVG logo)
+    implementation(libs.coil)
+    implementation(libs.coil.svg)
+
     // Testing
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
