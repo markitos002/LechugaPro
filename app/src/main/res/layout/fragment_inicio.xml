@@ -39,11 +39,21 @@
             android:scaleType="fitCenter" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_clientes"
+            android:id="@+id/btn_empezar"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:text="Empezar"
+            app:icon="@android:drawable/ic_media_play"
+            app:iconPadding="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_clientes"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="Clientes"
             app:icon="@android:drawable/ic_menu_manage"
             app:iconPadding="8dp" />
