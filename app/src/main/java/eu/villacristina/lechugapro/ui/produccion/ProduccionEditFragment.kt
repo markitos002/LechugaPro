@@ -21,7 +21,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.datepicker.CalendarConstraints
 
 class ProduccionEditFragment : Fragment() {
     private val args: ProduccionEditFragmentArgs by navArgs()
@@ -34,12 +33,22 @@ class ProduccionEditFragment : Fragment() {
     private lateinit var inputNombre: EditText
     private lateinit var inputVariedad: EditText
     private lateinit var inputNumero: EditText
+    private lateinit var inputInicioPrep: EditText
+    private lateinit var inputFinPrep: EditText
+    private lateinit var inputAbono: EditText
+    private lateinit var inputSuplemento: EditText
     private lateinit var inputSiembra: EditText
     private lateinit var inputEstimado: EditText
+    private lateinit var inputReal: EditText
     private lateinit var inputNotas: EditText
 
     private var selectedSiembra: Long? = null
     private var selectedEstimado: Long? = null
+    private var selectedInicioPrep: Long? = null
+    private var selectedFinPrep: Long? = null
+    private var selectedAbono: Long? = null
+    private var selectedSuplemento: Long? = null
+    private var selectedReal: Long? = null
 
     private val df = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
@@ -49,20 +58,41 @@ class ProduccionEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        inputNombre = view.findViewById(R.id.input_nombre)
-        inputVariedad = view.findViewById(R.id.input_variedad)
-        inputNumero = view.findViewById(R.id.input_numero_plantas)
-        inputSiembra = view.findViewById(R.id.input_fecha_siembra)
-        inputEstimado = view.findViewById(R.id.input_fecha_estimada)
-        inputNotas = view.findViewById(R.id.input_notas)
+    inputNombre = view.findViewById(R.id.input_nombre)
+    inputVariedad = view.findViewById(R.id.input_variedad)
+    inputNumero = view.findViewById(R.id.input_numero_plantas)
+    inputInicioPrep = view.findViewById(R.id.input_fecha_inicio_prep)
+    inputFinPrep = view.findViewById(R.id.input_fecha_fin_prep)
+    inputAbono = view.findViewById(R.id.input_fecha_abono)
+    inputSuplemento = view.findViewById(R.id.input_fecha_suplemento)
+    inputSiembra = view.findViewById(R.id.input_fecha_siembra)
+    inputEstimado = view.findViewById(R.id.input_fecha_estimada)
+    inputReal = view.findViewById(R.id.input_fecha_real_cosecha)
+    inputNotas = view.findViewById(R.id.input_notas)
 
         // Evitar teclado y usar picker
-        listOf(inputSiembra, inputEstimado).forEach { et ->
+        listOf(inputInicioPrep, inputFinPrep, inputAbono, inputSuplemento, inputSiembra, inputEstimado, inputReal).forEach { et ->
             et.isFocusable = false
             et.isClickable = true
             et.keyListener = null
         }
 
+        inputInicioPrep.setOnClickListener { showDatePicker("Inicio preparación tierra", selectedInicioPrep) { ts ->
+            selectedInicioPrep = ts
+            inputInicioPrep.setText(ts?.let { df.format(Date(it)) } ?: "")
+        } }
+        inputFinPrep.setOnClickListener { showDatePicker("Fin preparación tierra", selectedFinPrep) { ts ->
+            selectedFinPrep = ts
+            inputFinPrep.setText(ts?.let { df.format(Date(it)) } ?: "")
+        } }
+        inputAbono.setOnClickListener { showDatePicker("Fecha abono", selectedAbono) { ts ->
+            selectedAbono = ts
+            inputAbono.setText(ts?.let { df.format(Date(it)) } ?: "")
+        } }
+        inputSuplemento.setOnClickListener { showDatePicker("Fecha suplemento minerales", selectedSuplemento) { ts ->
+            selectedSuplemento = ts
+            inputSuplemento.setText(ts?.let { df.format(Date(it)) } ?: "")
+        } }
         inputSiembra.setOnClickListener { showDatePicker("Fecha siembra", selectedSiembra) { ts ->
             selectedSiembra = ts
             inputSiembra.setText(ts?.let { df.format(Date(it)) } ?: "")
@@ -70,6 +100,10 @@ class ProduccionEditFragment : Fragment() {
         inputEstimado.setOnClickListener { showDatePicker("Fecha estimada cosecha", selectedEstimado) { ts ->
             selectedEstimado = ts
             inputEstimado.setText(ts?.let { df.format(Date(it)) } ?: "")
+        } }
+        inputReal.setOnClickListener { showDatePicker("Fecha real de cosecha", selectedReal) { ts ->
+            selectedReal = ts
+            inputReal.setText(ts?.let { df.format(Date(it)) } ?: "")
         } }
 
         if (args.cicloId != -1L) {
@@ -87,10 +121,20 @@ class ProduccionEditFragment : Fragment() {
         inputNombre.setText(c.nombreCiclo)
         inputVariedad.setText(c.variedad)
         inputNumero.setText(c.numeroPlantas.takeIf { it != 0 }?.toString() ?: "")
+    selectedInicioPrep = c.fechaInicioPreparacionTierra
+    selectedFinPrep = c.fechaFinPreparacionTierra
+    selectedAbono = c.fechaAbono
+    selectedSuplemento = c.fechaSuplementoMinerales
     selectedSiembra = c.fechaSiembra
     selectedEstimado = c.fechaEstimadaCosecha
+    selectedReal = c.fechaRealCosecha
+    inputInicioPrep.setText(selectedInicioPrep?.let { df.format(Date(it)) } ?: "")
+    inputFinPrep.setText(selectedFinPrep?.let { df.format(Date(it)) } ?: "")
+    inputAbono.setText(selectedAbono?.let { df.format(Date(it)) } ?: "")
+    inputSuplemento.setText(selectedSuplemento?.let { df.format(Date(it)) } ?: "")
     inputSiembra.setText(selectedSiembra?.let { df.format(Date(it)) } ?: "")
     inputEstimado.setText(selectedEstimado?.let { df.format(Date(it)) } ?: "")
+    inputReal.setText(selectedReal?.let { df.format(Date(it)) } ?: "")
         inputNotas.setText(c.notas)
     }
 
@@ -103,8 +147,28 @@ class ProduccionEditFragment : Fragment() {
         }
         val variedad = inputVariedad.text.toString().trim().ifBlank { null }
         val numero = inputNumero.text.toString().toIntOrNull() ?: 0
-    val siembra = selectedSiembra ?: parseDate(inputSiembra.text.toString())
-    val estimada = selectedEstimado ?: parseDate(inputEstimado.text.toString())
+        val inicioPrep = selectedInicioPrep ?: parseDate(inputInicioPrep.text.toString())
+        val finPrep = selectedFinPrep ?: parseDate(inputFinPrep.text.toString())
+        val abono = selectedAbono ?: parseDate(inputAbono.text.toString())
+        val suplemento = selectedSuplemento ?: parseDate(inputSuplemento.text.toString())
+        val siembra = selectedSiembra ?: parseDate(inputSiembra.text.toString())
+        val estimada = selectedEstimado ?: parseDate(inputEstimado.text.toString())
+        val real = selectedReal ?: parseDate(inputReal.text.toString())
+
+        // Validaciones de secuencia básica
+        fun invalid(msg: String): Boolean { android.widget.Toast.makeText(requireContext(), msg, android.widget.Toast.LENGTH_SHORT).show(); return true }
+        if (inicioPrep != null && finPrep != null && inicioPrep > finPrep) {
+            if (invalid("Inicio preparación debe ser <= fin")) return
+        }
+        if (finPrep != null && siembra != null && finPrep > siembra) {
+            if (invalid("Fin preparación debe ser <= siembra")) return
+        }
+        if (siembra != null && estimada != null && siembra > estimada) {
+            if (invalid("Siembra debe ser <= estimada")) return
+        }
+        if (estimada != null && real != null && estimada > real) {
+            if (invalid("Estimada debe ser <= real")) return
+        }
         val notas = inputNotas.text.toString().ifBlank { null }
 
         if (args.cicloId == -1L) {
@@ -113,8 +177,13 @@ class ProduccionEditFragment : Fragment() {
                     nombreCiclo = nombre,
                     variedad = variedad,
                     numeroPlantas = numero,
+                    fechaInicioPreparacionTierra = inicioPrep,
+                    fechaFinPreparacionTierra = finPrep,
+                    fechaAbono = abono,
                     fechaSiembra = siembra,
+                    fechaSuplementoMinerales = suplemento,
                     fechaEstimadaCosecha = estimada,
+                    fechaRealCosecha = real,
                     notas = notas,
                     estado = "Planificado"
                 )
@@ -126,8 +195,13 @@ class ProduccionEditFragment : Fragment() {
                     nombreCiclo = nombre,
                     variedad = variedad,
                     numeroPlantas = numero,
+                    fechaInicioPreparacionTierra = inicioPrep,
+                    fechaFinPreparacionTierra = finPrep,
+                    fechaAbono = abono,
                     fechaSiembra = siembra,
+                    fechaSuplementoMinerales = suplemento,
                     fechaEstimadaCosecha = estimada,
+                    fechaRealCosecha = real,
                     notas = notas,
                     estado = viewModel.ciclo.value?.estado ?: "Planificado"
                 )
@@ -141,9 +215,9 @@ private fun ProduccionEditFragment.showDatePicker(title: String, current: Long?,
     val builder = MaterialDatePicker.Builder.datePicker()
         .setTitleText(title)
     current?.let { builder.setSelection(it) }
-    val picker = builder.build()
-    picker.addOnPositiveButtonClickListener { sel ->
-        onSelected(sel as? Long)
+    val picker: MaterialDatePicker<Long> = builder.build()
+    picker.addOnPositiveButtonClickListener { selection: Long ->
+        onSelected(selection)
     }
     picker.addOnNegativeButtonClickListener { /* ignored */ }
     picker.addOnCancelListener { /* ignored */ }
