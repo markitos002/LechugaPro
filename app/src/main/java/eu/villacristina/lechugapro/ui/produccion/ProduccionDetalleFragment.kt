@@ -4,100 +4,104 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import eu.villacristina.lechugapro.LechugaProApplication
+import eu.villacristina.lechugapro.R
 import eu.villacristina.lechugapro.data.CicloProduccion
 import eu.villacristina.lechugapro.data.CicloProduccionRepository
-import eu.villacristina.lechugapro.databinding.FragmentProduccionDetalleBinding
-import eu.villacristina.lechugapro.LechugaProApplication // Importamos nuestra clase Application
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlinx.coroutines.launch
+import androidx.lifecycle.viewModelScope
 
 class ProduccionDetalleFragment : Fragment() {
-
-    private var _binding: FragmentProduccionDetalleBinding? = null
-    private val binding get() = _binding!!
-
     private val args: ProduccionDetalleFragmentArgs by navArgs()
+
     private val viewModel: ProduccionDetalleViewModel by viewModels {
-        val application = requireActivity().application as LechugaProApplication
-        val cicloProduccionDao = application.database.cicloProduccionDao()
-        ProduccionDetalleViewModelFactory(
-            CicloProduccionRepository(cicloProduccionDao),
-            args.cicloId
-        )
+        val app = requireActivity().application as LechugaProApplication
+        ProduccionDetalleViewModel.Factory(CicloProduccionRepository(app.database.cicloProduccionDao()), args.cicloId)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentProduccionDetalleBinding.inflate(inflater, container, false)
-        return binding.root
+    private lateinit var nombre: TextView
+    private lateinit var estado: TextView
+    private lateinit var variedad: TextView
+    private lateinit var numero: TextView
+    private lateinit var fechas: TextView
+    private lateinit var notas: TextView
+    private lateinit var btnIniciar: Button
+    private lateinit var btnTerminar: Button
+    private lateinit var btnEditar: Button
+
+    private val df = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return inflater.inflate(R.layout.fragment_produccion_detalle, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        nombre = view.findViewById(R.id.detalle_nombre)
+        estado = view.findViewById(R.id.detalle_estado)
+        variedad = view.findViewById(R.id.detalle_variedad)
+        numero = view.findViewById(R.id.detalle_numero)
+        fechas = view.findViewById(R.id.detalle_fechas)
+        notas = view.findViewById(R.id.detalle_notas)
+        btnIniciar = view.findViewById(R.id.button_iniciar)
+        btnTerminar = view.findViewById(R.id.button_terminar)
+        btnEditar = view.findViewById(R.id.button_editar)
 
-        // Observar el LiveData del ViewModel
-        viewModel.ciclo.observe(viewLifecycleOwner, Observer { ciclo ->
-            ciclo?.let {
-                bindCiclo(it)
-                // **NUEVO**: Actualizamos la visibilidad de los botones cada vez que cambia el ciclo
-                actualizarVisibilidadBotones(it)
-            }
-        })
+        viewModel.ciclo.observe(viewLifecycleOwner) { c ->
+            c?.let { bind(it) }
+        }
 
-        // Listener para el botón de editar
-        binding.fabEditarCiclo.setOnClickListener {
+        btnIniciar.setOnClickListener { viewModel.cambiarEstado("Activo") }
+        btnTerminar.setOnClickListener { viewModel.cambiarEstado("Terminado") }
+        btnEditar.setOnClickListener {
             val action = ProduccionDetalleFragmentDirections.actionProduccionDetalleFragmentToProduccionEditFragment(args.cicloId)
             findNavController().navigate(action)
         }
-
-        // **NUEVO**: Listeners para los botones de cambio de estado
-        setupActionListeners()
     }
 
-    private fun bindCiclo(ciclo: CicloProduccion) {
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    private fun bind(c: CicloProduccion) {
+        nombre.text = c.nombreCiclo ?: "(Sin nombre)"
+        estado.text = "Estado: ${c.estado}"
+        variedad.text = "Variedad: ${c.variedad ?: "-"}"
+        numero.text = "Plantas: ${c.numeroPlantas}"
+        val siembra = c.fechaSiembra?.let { df.format(Date(it)) } ?: "?"
+        val estimada = c.fechaEstimadaCosecha?.let { df.format(Date(it)) } ?: "?"
+        fechas.text = "Siembra: $siembra • Estimada: $estimada"
+        notas.text = c.notas?.takeIf { it.isNotBlank() } ?: "Sin notas"
+        btnIniciar.isVisible = c.estado == "Planificado"
+        btnTerminar.isVisible = c.estado == "Activo"
+    }
+}
 
-        binding.detalleNombreCiclo.text = ciclo.nombreCiclo ?: "Sin nombre"
-        binding.detalleEstado.text = ciclo.estado
-        binding.detalleNumeroPlantas.text = ciclo.numeroPlantas.toString()
-        binding.detalleFechaSiembra.text = ciclo.fechaSiembra?.let { dateFormat.format(Date(it)) } ?: "N/A"
-        binding.detalleNotas.text = ciclo.notas ?: "Sin notas"
+class ProduccionDetalleViewModel(private val repository: CicloProduccionRepository, cicloId: Long) : ViewModel() {
+    val ciclo = repository.obtenerCicloPorId(cicloId)
+
+    fun cambiarEstado(nuevo: String) {
+        val actual = ciclo.value ?: return
+        if (actual.estado == nuevo) return
+        val actualizado = actual.copy(estado = nuevo)
+        viewModelScope.launch { repository.update(actualizado) }
     }
 
-    /**
-     * NUEVA FUNCIÓN
-     * Configura los listeners para los botones de acción.
-     */
-    private fun setupActionListeners() {
-        binding.buttonIniciarCiclo.setOnClickListener {
-            viewModel.cambiarEstadoCiclo("Activo")
+    class Factory(private val repo: CicloProduccionRepository, private val id: Long) : ViewModelProvider.Factory {
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(ProduccionDetalleViewModel::class.java)) {
+                return ProduccionDetalleViewModel(repo, id) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
         }
-        binding.buttonTerminarCiclo.setOnClickListener {
-            viewModel.cambiarEstadoCiclo("Terminado")
-        }
-    }
-
-    /**
-     * NUEVA FUNCIÓN
-     * Muestra y oculta los botones de acción según el estado actual del ciclo.
-     */
-    private fun actualizarVisibilidadBotones(ciclo: CicloProduccion) {
-        binding.buttonIniciarCiclo.isVisible = ciclo.estado == "Planificado"
-        binding.buttonTerminarCiclo.isVisible = ciclo.estado == "Activo"
-    }
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

@@ -1,135 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".ui.produccion.ProduccionDetalleFragment">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/detalle_nombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            tools:text="Ciclo Primavera" />
+
+        <TextView
+            android:id="@+id/detalle_estado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Planificado" />
+
+        <TextView
+            android:id="@+id/detalle_variedad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Variedad: Romana" />
+
+        <TextView
+            android:id="@+id/detalle_numero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Plantas: 1200" />
+
+        <TextView
+            android:id="@+id/detalle_fechas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Siembra: 01/02/2025 • Estimada: 01/05/2025" />
+
+        <TextView
+            android:id="@+id/detalle_notas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Notas del ciclo" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:paddingBottom="80dp">
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
 
-            <!-- Nombre del Ciclo -->
-            <TextView
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/button_iniciar"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Nombre del Ciclo"
-                style="?attr/textAppearanceLabelMedium" />
+                android:layout_weight="1"
+                android:text="Iniciar"
+                android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/detalle_nombre_ciclo"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/button_terminar"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                style="?attr/textAppearanceBodyLarge"
-                tools:text="Ciclo de Verano 2024" />
-
-            <!-- Estado -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Estado"
-                style="?attr/textAppearanceLabelMedium" />
-
-            <TextView
-                android:id="@+id/detalle_estado"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                style="?attr/textAppearanceBodyLarge"
-                tools:text="Activo" />
-
-            <!-- Número de Plantas -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Número de Plantas"
-                style="?attr/textAppearanceLabelMedium" />
-
-            <TextView
-                android:id="@+id/detalle_numero_plantas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                style="?attr/textAppearanceBodyLarge"
-                tools:text="150" />
-
-            <!-- Fecha de Siembra -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Fecha de Siembra"
-                style="?attr/textAppearanceLabelMedium" />
-
-            <TextView
-                android:id="@+id/detalle_fecha_siembra"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                style="?attr/textAppearanceBodyLarge"
-                tools:text="20/07/2024" />
-
-            <!-- Notas -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Notas"
-                style="?attr/textAppearanceLabelMedium" />
-
-            <TextView
-                android:id="@+id/detalle_notas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                style="?attr/textAppearanceBodyLarge"
-                tools:text="Este es un ciclo de prueba con notas extensas para ver cómo se ajusta el texto en múltiples líneas si fuera necesario." />
-
-            <!-- *** NUEVA SECCIÓN DE ACCIONES *** -->
-            <LinearLayout
-                android:id="@+id/layout_acciones_estado"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <Button
-                    android:id="@+id/button_iniciar_ciclo"
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Iniciar Ciclo"
-                    android:visibility="gone"
-                    tools:visibility="visible"/>
-
-                <Button
-                    android:id="@+id/button_terminar_ciclo"
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Marcar como Terminado"
-                    android:visibility="gone"
-                    tools:visibility="visible"/>
-            </LinearLayout>
-
+                android:layout_weight="1"
+                android:text="Terminar"
+                android:visibility="gone"
+                android:layout_marginStart="8dp" />
         </LinearLayout>
-    </ScrollView>
 
-    <!-- Botón Flotante para Editar -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_editar_ciclo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:contentDescription="Editar Ciclo"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
+        <Button
+            android:id="@+id/button_editar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Editar"
+            android:layout_marginTop="16dp" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
+</ScrollView>

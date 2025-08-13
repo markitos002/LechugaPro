@@ -15,6 +15,7 @@ import eu.villacristina.lechugapro.data.IngresoRepository
 import eu.villacristina.lechugapro.databinding.FragmentIngresoEditBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -35,8 +36,9 @@ class IngresoEditFragment : Fragment() {
         )
     }
 
-    // Formateador para convertir entre Long (timestamp) y String (dd/MM/yyyy)
+    // Formateador para mostrar fecha y estado actual seleccionado
     private val dateFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    private var selectedFecha: Long? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,11 +51,29 @@ class IngresoEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Deshabilitar edición manual y abrir date picker al tocar el campo
+        binding.editTextFechaIngreso.isFocusable = false
+        binding.editTextFechaIngreso.isClickable = true
+        binding.editTextFechaIngreso.keyListener = null
+        binding.textFieldLayoutFechaIngreso.setEndIconOnClickListener {
+            showDatePicker(selectedFecha) { ts ->
+                selectedFecha = ts
+                binding.editTextFechaIngreso.setText(dateFormatter.format(java.util.Date(ts)))
+            }
+        }
+        binding.editTextFechaIngreso.setOnClickListener {
+            showDatePicker(selectedFecha) { ts ->
+                selectedFecha = ts
+                binding.editTextFechaIngreso.setText(dateFormatter.format(java.util.Date(ts)))
+            }
+        }
+
         // Si estamos editando (ingresoId != -1L), observar y rellenar los campos
         if (args.ingresoId != -1L) {
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.ingreso.collectLatest { ingreso ->
                     ingreso?.let {
+                        selectedFecha = it.fecha
                         binding.editTextFechaIngreso.setText(dateFormatter.format(Date(it.fecha)))
                         binding.editTextConceptoIngreso.setText(it.concepto)
                         binding.editTextImporteIngreso.setText(it.importe.toString())
@@ -65,7 +85,8 @@ class IngresoEditFragment : Fragment() {
         } else {
             requireActivity().title = "Nuevo Ingreso"
             // Opcional: Poner la fecha actual por defecto al crear uno nuevo
-            binding.editTextFechaIngreso.setText(dateFormatter.format(Date()))
+            selectedFecha = System.currentTimeMillis()
+            binding.editTextFechaIngreso.setText(dateFormatter.format(Date(selectedFecha!!)))
         }
 
         binding.buttonGuardarIngreso.setOnClickListener {
@@ -84,15 +105,14 @@ class IngresoEditFragment : Fragment() {
             return
         }
 
-        val fechaLong: Long
-        try {
-            fechaLong = dateFormatter.parse(fechaStr)?.time ?: run {
-                Toast.makeText(requireContext(), "Formato de fecha inválido (dd/MM/yyyy)", Toast.LENGTH_SHORT).show()
+        val fechaLong: Long = selectedFecha ?: run {
+            // Fallback: intentar parsear si por alguna razón no se estableció
+            try {
+                dateFormatter.parse(fechaStr)?.time ?: throw IllegalArgumentException()
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "Selecciona una fecha válida", Toast.LENGTH_SHORT).show()
                 return
             }
-        } catch (e: Exception) {
-            Toast.makeText(requireContext(), "Formato de fecha inválido (dd/MM/yyyy)", Toast.LENGTH_SHORT).show()
-            return
         }
 
         val importeDouble: Double
@@ -107,10 +127,21 @@ class IngresoEditFragment : Fragment() {
             return
         }
 
-        viewModel.guardarIngreso(fechaLong, concepto, importeDouble, notas)
+    viewModel.guardarIngreso(fechaLong, concepto, importeDouble, notas)
 
         Toast.makeText(requireContext(), "Ingreso guardado", Toast.LENGTH_SHORT).show()
         findNavController().navigateUp() // Volver a la pantalla anterior
+    }
+
+    private fun showDatePicker(initialSelection: Long?, onSelected: (Long) -> Unit) {
+        val builder = MaterialDatePicker.Builder.datePicker()
+            .setTitleText("Fecha del ingreso")
+        initialSelection?.let { builder.setSelection(it) }
+        val picker = builder.build()
+        picker.addOnPositiveButtonClickListener { sel ->
+            (sel as? Long)?.let(onSelected)
+        }
+        picker.show(parentFragmentManager, "fecha_ingreso_picker")
     }
 
     override fun onDestroyView() {

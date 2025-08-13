@@ -1,105 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".ui.produccion.ProduccionEditFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
-        <!-- Campo para el Nombre del Ciclo -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editTextNombreCiclo"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <EditText
+            android:id="@+id/input_nombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre del Ciclo">
+            android:hint="Nombre del ciclo" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapWords" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-        
-        <!-- Selector de Estado -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editTextEstado"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        <EditText
+            android:id="@+id/input_variedad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="Estado">
+            android:hint="Variedad" />
 
-            <AutoCompleteTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Campo para el Número de Plantas -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editTextNumeroPlantas"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <EditText
+            android:id="@+id/input_numero_plantas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="Número de Plantas">
+            android:inputType="number"
+            android:hint="Número de plantas" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Campo para la Fecha de Siembra -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editTextFechaSiembra"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <EditText
+            android:id="@+id/input_fecha_siembra"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="Fecha de Siembra (dd/MM/yyyy)">
+            android:hint="Fecha siembra (dd/MM/yyyy)" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="date" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-        
-        <!-- Notas -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editTextNotas"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <EditText
+            android:id="@+id/input_fecha_estimada"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="Notas Adicionales">
+            android:hint="Fecha estimada cosecha (dd/MM/yyyy)" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top"
-                android:inputType="textMultiLine"
-                android:minLines="3" />
+        <EditText
+            android:id="@+id/input_notas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minLines="3"
+            android:gravity="top"
+            android:hint="Notas" />
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Botón para Guardar -->
         <Button
             android:id="@+id/button_guardar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Guardar Ciclo" />
+            android:text="Guardar" />
 
     </LinearLayout>
 </ScrollView>

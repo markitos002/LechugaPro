@@ -17,6 +17,7 @@
 *   [x] **Tarea 13: Implementar Creación de Nuevos Ciclos**
 *   [x] **Tarea 14: Implementar Edición de Ciclos Existentes**
 *   [x] **Tarea 15: Implementar Cambio de Estado del Ciclo**
+*   [x] **Tarea 16: Refactor UI Producción (reset de módulo y reconstrucción lista + edición + detalle + date pickers)**
 
 ## Fase 2: Módulo de Comercialización (Clientes e Ingresos)
 
@@ -32,21 +33,19 @@
     *   [x] Implementar `ClienteEditFragment` para la lógica de inserción y actualización.
     *   [x] Implementar `ClienteDetalleFragment` para mostrar la información del cliente.
     *   [x] Configurar la navegación completa: Lista -> Detalle -> Edición.
-*   [ ] **Tarea 23: Módulo de Comercialización - Ingresos (CRUD)**
-    *   [x] **Mostrar Lista de Ingresos en Detalle del Cliente:**
-        *   [x] Modificar `fragment_cliente_detalle.xml` para añadir RecyclerView de ingresos y FAB para "Añadir Ingreso".
-        *   [x] Crear layout `item_ingreso.xml` para cada fila de la lista de ingresos.
-        *   [x] Crear `IngresoListaAdapter` (y moverlo al paquete `...ui.comercializacion.ingreso`).
-        *   [x] Actualizar `ClienteDetalleViewModel` para cargar y exponer la lista de ingresos del cliente.
-        *   [x] Actualizar `ClienteDetalleFragment` para mostrar la lista de ingresos y manejar el menú de opciones (Editar/Borrar Cliente) y el FAB (Añadir Ingreso).
-        *   [x] Crear `menu_detalle.xml` para las opciones de Editar/Borrar en la ActionBar.
-    *   [ ] **Añadir/Editar Ingresos:**
-        *   [ ] Crear layout `fragment_ingreso_edit.xml`.
-        *   [ ] Crear `IngresoEditViewModel`.
-        *   [ ] Crear `IngresoEditFragment`.
-        *   [x] Actualizar `nav_graph.xml` para incluir `IngresoEditFragment` y la acción de navegación.
-    *   [ ] **Borrar Ingresos** (desde la lista en `ClienteDetalleFragment`).
-*   [ ] **Tarea 24: (Opcional) Implementar `BottomNavigationView` para alternar entre módulos**.
+*   [x] **Tarea 23: Módulo de Comercialización - Ingresos (CRUD)**
+    *   [x] Mostrar Lista de Ingresos en Detalle de Cliente
+    *   [x] Layout `item_ingreso.xml`
+    *   [x] `IngresoListaAdapter`
+    *   [x] Integración en `ClienteDetalleFragment`
+    *   [x] Menú contextual (editar / borrar cliente)
+    *   [x] Layout `fragment_ingreso_edit.xml`
+    *   [x] `IngresoEditViewModel`
+    *   [x] `IngresoEditFragment`
+    *   [x] Navegación a editor de ingreso (Safe Args)
+    *   [x] Borrado con swipe + undo de ingresos
+*   [x] **Tarea 24: Implementar `BottomNavigationView`**
+*   [ ] **Tarea 25: Mejoras UX Ingresos** (date picker moderno, validaciones extra, formato moneda)
 
 ## Fase 3: Módulo de Comercialización (Gastos y Ganancias)
 *(Tareas futuras sin cambios)*
@@ -56,3 +55,45 @@
 
 ## Fase 5: Mejoras, Pruebas y Toques Finales
 *(Tareas futuras sin cambios)*
+
+---
+
+## Backlog Técnico / Pendiente Detallado
+
+### Producción
+1. Mostrar y editar fechas adicionales (preparación tierra, abono, suplemento, cosecha real) con MaterialDatePicker.
+2. Validar secuencia lógica de fechas (preparación <= siembra <= estimada <= real).
+3. Acciones rápidas para cambiar estado (chips o menú contextual) y registrar timestamps de transición de estado.
+4. Convertir adapter inline de lista de ciclos a `ProduccionListaAdapter` con DiffUtil (optimización).
+5. Soporte de borrado de ciclo (confirmación + undo Snackbar).
+6. Internacionalizar textos hardcode (strings.xml) y formato de fechas localizable.
+7. Tests unitarios ViewModels (insert/update/estado) y test instrumentado de navegación básica.
+
+### Comercialización - Ingresos
+1. (Hecho) Swipe delete con undo.
+2. Date picker Material para fecha de ingreso (sustituir input manual).
+3. Filtro rango fechas + total sumario (detalle cliente).
+4. Validar importe (mínimo >0, opcional máximo configurable) y formato regional.
+5. Tests repositorio/flujo (insertar, actualizar, borrar).
+
+### Cross-cutting
+1. Extraer formatos de fecha a util central y permitir configuración futura.
+2. Tema oscuro y revisión de contraste / accesibilidad.
+3. Manejo de errores global (Room, parseo) con Result wrapper o sealed classes.
+4. Migrar LiveData a Flow donde aplique para consistencia.
+5. Habilitar configuración de idioma / localización.
+
+### Infraestructura / Calidad
+1. Añadir Ktlint o detekt + configuración básica.
+2. Añadir script de CI (GitHub Actions) para build + tests.
+3. Configurar dependabot / version catalog updates automatizadas.
+4. Generar README con capturas e instrucciones de build.
+
+---
+
+## Próximo Sprint Propuesto (actualizado)
+1. Date picker en IngresoEditFragment (MaterialDatePicker) y bloqueo de entrada manual.
+2. Date pickers adicionales en Producción + validación de secuencia fechas.
+3. Adapter Producción con DiffUtil.
+4. Internacionalización textos críticos + strings.xml.
+5. Tests unitarios básicos (ProduccionDetalleViewModel, IngresoEditViewModel).

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import eu.villacristina.lechugapro.data.Ingreso
 import eu.villacristina.lechugapro.data.IngresoRepository
+import eu.villacristina.lechugapro.data.IngresoRepositoryContract
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,7 +13,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class IngresoEditViewModel(
-    private val repository: IngresoRepository,
+    private val repository: IngresoRepositoryContract,
     val clienteId: Long, // Este es el ID que recibimos, está bien que se llame así aquí
     private val ingresoId: Long
 ) : ViewModel() {
@@ -28,27 +29,23 @@ class IngresoEditViewModel(
         }
     }
 
-    fun guardarIngreso(fecha: Long, concepto: String, importe: Double, notas: String) {
+    fun guardarIngreso(fechaMillis: Long, concepto: String, importe: Double, notas: String) {
         val ingresoActual = _ingreso.value
-        val fechaComoString = fecha.toString()
-
-        if (ingresoActual != null) { // Estamos editando
+        if (ingresoActual != null) { // Editar
             val ingresoActualizado = ingresoActual.copy(
-                fecha = fechaComoString,
+                fecha = fechaMillis,
                 concepto = concepto,
                 importe = importe,
                 notas = notas
             )
             update(ingresoActualizado)
-        } else { // Estamos creando
-            // --- CORRECCIÓN FINAL AQUÍ ---
-            // El parámetro en el constructor de Ingreso se llama "idCliente"
+        } else { // Crear
             val nuevoIngreso = Ingreso(
-                idCliente = clienteId, // Usamos el nombre de parámetro correcto
-                fecha = fechaComoString,
+                idCliente = clienteId,
+                fecha = fechaMillis,
                 concepto = concepto,
                 importe = importe,
-                notas = notas
+                notas = notas.ifBlank { null }
             )
             insert(nuevoIngreso)
         }
@@ -64,7 +61,7 @@ class IngresoEditViewModel(
 }
 
 class IngresoEditViewModelFactory(
-    private val repository: IngresoRepository,
+    private val repository: IngresoRepositoryContract,
     private val clienteId: Long,
     private val ingresoId: Long
 ) : ViewModelProvider.Factory {

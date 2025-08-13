@@ -5,12 +5,6 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
 }
 
-val roomVersion = "2.6.1"
-val lifecycleVersion = "2.8.3" // O la más reciente
-val navigationVersion = "2.7.7" // O la más reciente
-val coroutinesVersion = "1.7.3" // O la más reciente
-val materialVersion = "1.12.0" // O la más reciente
-
 android {
     namespace = "eu.villacristina.lechugapro"
     compileSdk = 36
@@ -47,33 +41,33 @@ android {
 }
 
 dependencies {
+    // Básicas UI y núcleo
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.constraintlayout)
 
-    implementation("androidx.core:core-ktx:1.13.1") // Suele estar ya
-    implementation("androidx.appcompat:appcompat:1.7.0") // Suele estar ya
-    implementation("com.google.android.material:material:$materialVersion") // Actualiza o añade Material
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4") // Suele estar ya para layouts
+    // Lifecycle
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
 
-    // Lifecycle (ViewModel and LiveData)
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion") // Para `lifecycleScope`
+    // Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    kapt(libs.androidx.room.compiler)
 
-    // Room (Base de datos local)
-    implementation("androidx.room:room-runtime:$roomVersion")
-    // annotationProcessor("androidx.room:room-compiler:$roomVersion") // Para Java
-    kapt("androidx.room:room-compiler:$roomVersion") // Para Kotlin con KAPT
-    implementation("androidx.room:room-ktx:$roomVersion") // Extensiones KTX para Room (coroutines, etc.)
-
-    // Navigation Component
-    implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
-    implementation("androidx.navigation:navigation-ui-ktx:$navigationVersion")
+    // Navigation
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 
-    // Para testing (ya suelen estar, pero verifica)
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+    // Testing
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }

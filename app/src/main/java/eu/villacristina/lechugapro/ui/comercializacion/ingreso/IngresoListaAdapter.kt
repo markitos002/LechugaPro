@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import eu.villacristina.lechugapro.data.Ingreso
 import eu.villacristina.lechugapro.databinding.ItemIngresoBinding
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class IngresoListaAdapter(
@@ -28,9 +30,10 @@ class IngresoListaAdapter(
     }
 
     class IngresoViewHolder(private val binding: ItemIngresoBinding) : RecyclerView.ViewHolder(binding.root) {
+        private val dateFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         fun bind(ingreso: Ingreso) {
             binding.itemIngresoConcepto.text = ingreso.concepto
-            binding.itemIngresoFecha.text = ingreso.fecha
+            binding.itemIngresoFecha.text = dateFormatter.format(Date(ingreso.fecha))
             
             // Formatear el importe como moneda local (Euro en este caso)
             val format = NumberFormat.getCurrencyInstance(Locale.GERMANY) // Usamos Locale.GERMANY para el formato €,##

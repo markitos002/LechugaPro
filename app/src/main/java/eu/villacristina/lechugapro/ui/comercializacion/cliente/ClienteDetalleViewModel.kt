@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import eu.villacristina.lechugapro.data.Cliente
-import eu.villacristina.lechugapro.data.ClienteRepository
+import eu.villacristina.lechugapro.data.ClienteRepositoryContract
 import eu.villacristina.lechugapro.data.Ingreso
-import eu.villacristina.lechugapro.data.IngresoRepository
+import eu.villacristina.lechugapro.data.IngresoRepositoryContract
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,8 +14,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class ClienteDetalleViewModel(
-    clienteRepository: ClienteRepository,
-    private val ingresoRepository: IngresoRepository, // Repositorio de Ingresos
+    private val clienteRepository: ClienteRepositoryContract,
+    private val ingresoRepository: IngresoRepositoryContract,
     private val clienteId: Long
 ) : ViewModel() {
 
@@ -41,12 +41,24 @@ class ClienteDetalleViewModel(
             }
         }
     }
+
+    fun deleteIngreso(ingreso: Ingreso) = viewModelScope.launch {
+        ingresoRepository.delete(ingreso)
+    }
+
+    fun reInsertIngreso(ingreso: Ingreso) = viewModelScope.launch {
+        ingresoRepository.insert(ingreso)
+    }
+
+    fun deleteCliente() = viewModelScope.launch {
+        _cliente.value?.let { clienteRepository.delete(it) }
+    }
 }
 
 // El Factory ahora necesita ambos repositorios
 class ClienteDetalleViewModelFactory(
-    private val clienteRepository: ClienteRepository,
-    private val ingresoRepository: IngresoRepository,
+    private val clienteRepository: ClienteRepositoryContract,
+    private val ingresoRepository: IngresoRepositoryContract,
     private val clienteId: Long
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

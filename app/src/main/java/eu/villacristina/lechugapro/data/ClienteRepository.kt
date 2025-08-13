@@ -2,23 +2,31 @@ package eu.villacristina.lechugapro.data
 
 import kotlinx.coroutines.flow.Flow
 
-class ClienteRepository(private val clienteDao: ClienteDao) {
+interface ClienteRepositoryContract {
+    val todosLosClientes: Flow<List<Cliente>>
+    fun getClienteById(id: Long): Flow<Cliente?>
+    suspend fun insert(cliente: Cliente)
+    suspend fun update(cliente: Cliente)
+    suspend fun delete(cliente: Cliente)
+}
 
-    val todosLosClientes: Flow<List<Cliente>> = clienteDao.getAllClientes()
+class ClienteRepository(private val clienteDao: ClienteDao) : ClienteRepositoryContract {
 
-    fun getClienteById(id: Long): Flow<Cliente?> {
+    override val todosLosClientes: Flow<List<Cliente>> = clienteDao.getAllClientes()
+
+    override fun getClienteById(id: Long): Flow<Cliente?> {
         return clienteDao.getClienteById(id)
     }
 
-    suspend fun insert(cliente: Cliente) {
+    override suspend fun insert(cliente: Cliente) {
         clienteDao.insert(cliente)
     }
 
-    suspend fun update(cliente: Cliente) {
+    override suspend fun update(cliente: Cliente) {
         clienteDao.update(cliente)
     }
 
-    suspend fun delete(cliente: Cliente) {
+    override suspend fun delete(cliente: Cliente) {
         clienteDao.delete(cliente)
     }
 }

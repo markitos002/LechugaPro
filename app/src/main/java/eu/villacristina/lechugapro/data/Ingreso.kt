@@ -27,7 +27,8 @@ data class Ingreso(
     @ColumnInfo(name = "id_cliente", index = true)
     val idCliente: Long, // ID del cliente al que pertenece el ingreso
 
-    val fecha: String,
+    // Almacenar fecha como epoch millis (Long) para facilitar orden y cálculos
+    val fecha: Long,
     val concepto: String,
     val importe: Double,
     val notas: String? = null

@@ -1,4 +1,11 @@
 <resources>
+    <string name="ingreso_borrado">Ingreso borrado</string>
+    <string name="deshacer">DESHACER</string>
+    <string name="confirm_delete_cliente_title">Eliminar cliente</string>
+    <string name="confirm_delete_cliente_message">¿Seguro que deseas eliminar al cliente "%1$s"? Esta acción no se puede deshacer.</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="cliente_eliminado">Cliente eliminado</string>
     <string name="app_name">LechugaPro</string>
     <string name="agregar_nuevo_ciclo_produccion">Agregar nuevo ciclo de producción</string>
     <string name="fecha_de_siembra_label">Siembra:</string>

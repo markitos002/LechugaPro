@@ -3,25 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/clienteListaFragment">
+    app:startDestination="@id/produccionListaFragment">
 
-    <!-- Fragmentos de Producción -->
     <fragment
         android:id="@+id/produccionListaFragment"
         android:name="eu.villacristina.lechugapro.ui.produccion.ProduccionListaFragment"
-        android:label="Lista de Producción"
-        tools:layout="@layout/fragment_produccion_lista">
-        <action
-            android:id="@+id/action_produccionListaFragment_to_produccionDetalleFragment"
-            app:destination="@id/produccionDetalleFragment" />
+        android:label="Producción"
+        tools:layout="@layout/fragment_produccion_lista" >
         <action
             android:id="@+id/action_produccionListaFragment_to_produccionEditFragment"
             app:destination="@id/produccionEditFragment" />
+        <action
+            android:id="@+id/action_produccionListaFragment_to_produccionDetalleFragment"
+            app:destination="@id/produccionDetalleFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/produccionEditFragment"
+        android:name="eu.villacristina.lechugapro.ui.produccion.ProduccionEditFragment"
+        android:label="Editar Ciclo"
+        tools:layout="@layout/fragment_produccion_edit">
+        <argument
+            android:name="cicloId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+    </fragment>
+
     <fragment
         android:id="@+id/produccionDetalleFragment"
         android:name="eu.villacristina.lechugapro.ui.produccion.ProduccionDetalleFragment"
-        android:label="Detalle del Ciclo"
+        android:label="Detalle Ciclo"
         tools:layout="@layout/fragment_produccion_detalle">
         <argument
             android:name="cicloId"
@@ -30,16 +41,8 @@
             android:id="@+id/action_produccionDetalleFragment_to_produccionEditFragment"
             app:destination="@id/produccionEditFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/produccionEditFragment"
-        android:name="eu.villacristina.lechugapro.ui.produccion.ProduccionEditFragment"
-        android:label="Crear o Editar Ciclo"
-        tools:layout="@layout/fragment_produccion_edit">
-        <argument
-            android:name="cicloId"
-            app:argType="long"
-            android:defaultValue="-1L" />
-    </fragment>
+
+    <!-- (Producción UI eliminada temporalmente: lista/detalle/edición) -->
 
     <!-- Fragmentos de Comercialización -->
     <fragment
@@ -65,6 +68,10 @@
         <action
             android:id="@+id/action_clienteDetalleFragment_to_clienteEditFragment"
             app:destination="@id/clienteEditFragment" />
+        <!-- Nueva acción: ir al editor de ingresos desde el detalle de cliente -->
+        <action
+            android:id="@+id/action_clienteDetalleFragment_to_ingresoEditFragment"
+            app:destination="@id/ingresoEditFragment" />
     </fragment>
     <fragment
         android:id="@+id/clienteEditFragment"
