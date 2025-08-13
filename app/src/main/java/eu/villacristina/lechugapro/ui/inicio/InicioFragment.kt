@@ -28,7 +28,7 @@ class InicioFragment : Fragment() {
 		val imageLoader = ImageLoader.Builder(requireContext())
 			.components { add(SvgDecoder.Factory()) }
 			.build()
-		view.findViewById<ImageView>(R.id.logo).load(R.raw.icon, imageLoader) {
+	view.findViewById<ImageView>(R.id.logo).load(R.raw.lettuce, imageLoader) {
 			decoderFactory(SvgDecoder.Factory())
 			crossfade(true)
 		}

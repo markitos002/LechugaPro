@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".ui.produccion.ProduccionDetalleFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/detalle_nombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            tools:text="Ciclo Primavera" />
+
+        <TextView
+            android:id="@+id/detalle_estado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Planificado" />
+
+        <TextView
+            android:id="@+id/detalle_variedad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Variedad: Romana" />
+
+        <TextView
+            android:id="@+id/detalle_numero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Plantas: 1200" />
+
+        <TextView
+            android:id="@+id/detalle_fechas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Siembra: 01/02/2025 • Estimada: 01/05/2025" />
+
+        <TextView
+            android:id="@+id/detalle_notas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Notas del ciclo" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/button_iniciar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Iniciar"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/button_terminar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Terminar"
+                android:visibility="gone"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_editar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Editar"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+</ScrollView>

@@ -5,6 +5,9 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
 }
 
+// Workaround: move build outputs to a different folder to avoid Windows file lock on app/build
+buildDir = file("build-app")
+
 android {
     namespace = "eu.villacristina.lechugapro"
     compileSdk = 36
