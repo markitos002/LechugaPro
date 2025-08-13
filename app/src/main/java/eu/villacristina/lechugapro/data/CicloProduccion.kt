@@ -1,14 +1,18 @@
 package eu.villacristina.lechugapro.data
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "ciclos_produccion")
+@Entity(
+    tableName = "ciclos_produccion",
+    indices = [Index(value = ["numeroCiclo"], unique = true)]
+)
 data class CicloProduccion(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L,
 
-    var nombreCiclo: String? = null,
+    var numeroCiclo: Int? = null,
 
     // --- Campos añadidos/actualizados ---
     var variedad: String? = null,

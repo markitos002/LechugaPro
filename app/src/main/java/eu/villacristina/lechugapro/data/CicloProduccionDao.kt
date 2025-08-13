@@ -15,6 +15,9 @@ interface CicloProduccionDao {
     @Query("SELECT * FROM ciclos_produccion WHERE id = :id")
     fun getById(id: Long): LiveData<CicloProduccion?>
 
+    @Query("SELECT EXISTS(SELECT 1 FROM ciclos_produccion WHERE numeroCiclo = :numero AND (:excludeId IS NULL OR id != :excludeId))")
+    suspend fun existsByNumeroCiclo(numero: Int, excludeId: Long?): Boolean
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(ciclo: CicloProduccion): Long
 

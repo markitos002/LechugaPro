@@ -13,31 +13,36 @@
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_numero_ciclo"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre del ciclo">
+            android:hint="Número de ciclo">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapSentences" />
+                android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="Variedad">
+            android:hint="Variedad"
+            app:endIconMode="dropdown_menu">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/input_variedad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapWords" />
+                android:inputType="none"
+                android:focusable="false"
+                android:clickable="true"
+                app:simpleItems="@array/variedades_lechuga" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="Inicio preparación tierra (dd/MM/yyyy)">
+            android:hint="Inicio preparación tierra (auto, 3 días antes de siembra)">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_fecha_inicio_prep"
@@ -75,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="Fin preparación tierra (dd/MM/yyyy)">
+            android:hint="Fin preparación tierra (auto, 1 día antes de siembra)">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_fecha_fin_prep"
@@ -98,19 +103,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Fecha suplemento minerales (dd/MM/yyyy)">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_fecha_suplemento"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+        
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -131,7 +124,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="Fecha estimada cosecha (dd/MM/yyyy)">
+            android:hint="Fecha estimada cosecha (auto, 8 semanas después de siembra)">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_fecha_estimada"

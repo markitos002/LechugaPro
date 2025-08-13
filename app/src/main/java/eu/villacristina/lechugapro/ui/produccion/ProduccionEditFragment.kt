@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -21,6 +22,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.textfield.TextInputLayout
+import eu.villacristina.lechugapro.notifications.ReminderScheduler
 
 class ProduccionEditFragment : Fragment() {
     private val args: ProduccionEditFragmentArgs by navArgs()
@@ -36,11 +39,11 @@ class ProduccionEditFragment : Fragment() {
     private lateinit var inputInicioPrep: EditText
     private lateinit var inputFinPrep: EditText
     private lateinit var inputAbono: EditText
-    private lateinit var inputSuplemento: EditText
     private lateinit var inputSiembra: EditText
     private lateinit var inputEstimado: EditText
     private lateinit var inputReal: EditText
     private lateinit var inputNotas: EditText
+    private lateinit var layoutNumeroCiclo: TextInputLayout
 
     private var selectedSiembra: Long? = null
     private var selectedEstimado: Long? = null
@@ -64,43 +67,40 @@ class ProduccionEditFragment : Fragment() {
     inputInicioPrep = view.findViewById(R.id.input_fecha_inicio_prep)
     inputFinPrep = view.findViewById(R.id.input_fecha_fin_prep)
     inputAbono = view.findViewById(R.id.input_fecha_abono)
-    inputSuplemento = view.findViewById(R.id.input_fecha_suplemento)
     inputSiembra = view.findViewById(R.id.input_fecha_siembra)
     inputEstimado = view.findViewById(R.id.input_fecha_estimada)
     inputReal = view.findViewById(R.id.input_fecha_real_cosecha)
     inputNotas = view.findViewById(R.id.input_notas)
+    layoutNumeroCiclo = view.findViewById(R.id.layout_numero_ciclo)
 
         // Evitar teclado y usar picker
-        listOf(inputInicioPrep, inputFinPrep, inputAbono, inputSuplemento, inputSiembra, inputEstimado, inputReal).forEach { et ->
+        listOf(inputSiembra, inputAbono, inputReal).forEach { et ->
             et.isFocusable = false
             et.isClickable = true
             et.keyListener = null
         }
+        // Los campos derivados son solo lectura
+        listOf(inputInicioPrep, inputFinPrep, inputEstimado).forEach { et ->
+            et.isFocusable = false
+            et.isClickable = false
+            et.keyListener = null
+        }
 
-        inputInicioPrep.setOnClickListener { showDatePicker("Inicio preparación tierra", selectedInicioPrep) { ts ->
-            selectedInicioPrep = ts
-            inputInicioPrep.setText(ts?.let { df.format(Date(it)) } ?: "")
-        } }
-        inputFinPrep.setOnClickListener { showDatePicker("Fin preparación tierra", selectedFinPrep) { ts ->
-            selectedFinPrep = ts
-            inputFinPrep.setText(ts?.let { df.format(Date(it)) } ?: "")
-        } }
+        (inputVariedad as? MaterialAutoCompleteTextView)?.setOnClickListener {
+            (it as MaterialAutoCompleteTextView).showDropDown()
+        }
+
+        // Siembra define fechas derivadas
         inputAbono.setOnClickListener { showDatePicker("Fecha abono", selectedAbono) { ts ->
             selectedAbono = ts
             inputAbono.setText(ts?.let { df.format(Date(it)) } ?: "")
         } }
-        inputSuplemento.setOnClickListener { showDatePicker("Fecha suplemento minerales", selectedSuplemento) { ts ->
-            selectedSuplemento = ts
-            inputSuplemento.setText(ts?.let { df.format(Date(it)) } ?: "")
-        } }
         inputSiembra.setOnClickListener { showDatePicker("Fecha siembra", selectedSiembra) { ts ->
             selectedSiembra = ts
             inputSiembra.setText(ts?.let { df.format(Date(it)) } ?: "")
+            recalcDerivedFromSiembra()
         } }
-        inputEstimado.setOnClickListener { showDatePicker("Fecha estimada cosecha", selectedEstimado) { ts ->
-            selectedEstimado = ts
-            inputEstimado.setText(ts?.let { df.format(Date(it)) } ?: "")
-        } }
+        // inputEstimado ahora es derivado
         inputReal.setOnClickListener { showDatePicker("Fecha real de cosecha", selectedReal) { ts ->
             selectedReal = ts
             inputReal.setText(ts?.let { df.format(Date(it)) } ?: "")
@@ -118,7 +118,7 @@ class ProduccionEditFragment : Fragment() {
     }
 
     private fun bind(c: CicloProduccion) {
-        inputNombre.setText(c.nombreCiclo)
+    inputNombre.setText(c.numeroCiclo?.toString())
         inputVariedad.setText(c.variedad)
         inputNumero.setText(c.numeroPlantas.takeIf { it != 0 }?.toString() ?: "")
     selectedInicioPrep = c.fechaInicioPreparacionTierra
@@ -131,7 +131,7 @@ class ProduccionEditFragment : Fragment() {
     inputInicioPrep.setText(selectedInicioPrep?.let { df.format(Date(it)) } ?: "")
     inputFinPrep.setText(selectedFinPrep?.let { df.format(Date(it)) } ?: "")
     inputAbono.setText(selectedAbono?.let { df.format(Date(it)) } ?: "")
-    inputSuplemento.setText(selectedSuplemento?.let { df.format(Date(it)) } ?: "")
+    // Campo de suplemento removido del formulario; valor se conserva internamente si existe
     inputSiembra.setText(selectedSiembra?.let { df.format(Date(it)) } ?: "")
     inputEstimado.setText(selectedEstimado?.let { df.format(Date(it)) } ?: "")
     inputReal.setText(selectedReal?.let { df.format(Date(it)) } ?: "")
@@ -140,18 +140,46 @@ class ProduccionEditFragment : Fragment() {
 
     private fun parseDate(text: String): Long? = try { if (text.isBlank()) null else df.parse(text)?.time } catch (_: Exception) { null }
 
+    private fun recalcDerivedFromSiembra() {
+        val s = selectedSiembra ?: return
+        val dayMs = 24L * 60 * 60 * 1000
+        selectedInicioPrep = s - 3L * dayMs
+        selectedFinPrep = s - 1L * dayMs
+        selectedEstimado = s + 56L * dayMs
+        inputInicioPrep.setText(df.format(Date(selectedInicioPrep!!)))
+        inputFinPrep.setText(df.format(Date(selectedFinPrep!!)))
+        inputEstimado.setText(df.format(Date(selectedEstimado!!)))
+    }
+
     private fun save() {
         val nombre = inputNombre.text.toString().trim()
+        layoutNumeroCiclo.error = null
         if (nombre.isEmpty()) {
-            Toast.makeText(requireContext(), "Nombre obligatorio", Toast.LENGTH_SHORT).show(); return
+            layoutNumeroCiclo.error = "Número de ciclo obligatorio"
+            return
         }
-        val variedad = inputVariedad.text.toString().trim().ifBlank { null }
-        val numero = inputNumero.text.toString().toIntOrNull() ?: 0
-        val inicioPrep = selectedInicioPrep ?: parseDate(inputInicioPrep.text.toString())
-        val finPrep = selectedFinPrep ?: parseDate(inputFinPrep.text.toString())
+        val numeroCiclo = nombre.toIntOrNull()
+        if (numeroCiclo == null) {
+            layoutNumeroCiclo.error = "Número de ciclo inválido"
+            return
+        }
+    val variedad = inputVariedad.text.toString().trim().ifBlank { null }
+    val numero = inputNumero.text.toString().toIntOrNull() ?: 0
+    val siembra = selectedSiembra ?: parseDate(inputSiembra.text.toString())
+    // Recalcular derivados desde siembra si es posible
+    if (siembra != null) {
+            val tresDias = 3L * 24 * 60 * 60 * 1000
+            selectedInicioPrep = siembra - tresDias
+            selectedFinPrep = siembra - 1L * 24 * 60 * 60 * 1000
+            selectedEstimado = siembra + 56L * 24 * 60 * 60 * 1000
+            inputInicioPrep.setText(df.format(Date(selectedInicioPrep!!)))
+            inputFinPrep.setText(df.format(Date(selectedFinPrep!!)))
+            inputEstimado.setText(df.format(Date(selectedEstimado!!)))
+        }
+        val inicioPrep = selectedInicioPrep
+        val finPrep = selectedFinPrep
         val abono = selectedAbono ?: parseDate(inputAbono.text.toString())
-        val suplemento = selectedSuplemento ?: parseDate(inputSuplemento.text.toString())
-        val siembra = selectedSiembra ?: parseDate(inputSiembra.text.toString())
+    val suplemento = selectedSuplemento
         val estimada = selectedEstimado ?: parseDate(inputEstimado.text.toString())
         val real = selectedReal ?: parseDate(inputReal.text.toString())
 
@@ -160,10 +188,10 @@ class ProduccionEditFragment : Fragment() {
         if (inicioPrep != null && finPrep != null && inicioPrep > finPrep) {
             if (invalid("Inicio preparación debe ser <= fin")) return
         }
-        if (finPrep != null && siembra != null && finPrep > siembra) {
+    if (finPrep != null && siembra != null && finPrep > siembra) {
             if (invalid("Fin preparación debe ser <= siembra")) return
         }
-        if (siembra != null && estimada != null && siembra > estimada) {
+    if (siembra != null && estimada != null && siembra > estimada) {
             if (invalid("Siembra debe ser <= estimada")) return
         }
         if (estimada != null && real != null && estimada > real) {
@@ -174,7 +202,7 @@ class ProduccionEditFragment : Fragment() {
         if (args.cicloId == -1L) {
             viewModel.insert(
                 CicloProduccion(
-                    nombreCiclo = nombre,
+                    numeroCiclo = numeroCiclo,
                     variedad = variedad,
                     numeroPlantas = numero,
                     fechaInicioPreparacionTierra = inicioPrep,
@@ -182,17 +210,24 @@ class ProduccionEditFragment : Fragment() {
                     fechaAbono = abono,
                     fechaSiembra = siembra,
                     fechaSuplementoMinerales = suplemento,
-                    fechaEstimadaCosecha = estimada,
+                    fechaEstimadaCosecha = selectedEstimado,
                     fechaRealCosecha = real,
                     notas = notas,
                     estado = "Planificado"
                 )
-            )
+        ) { ok, msg, id ->
+                if (!ok) {
+                    if (msg?.contains("Número de ciclo ya existe") == true) layoutNumeroCiclo.error = msg else Toast.makeText(requireContext(), msg ?: "Error", Toast.LENGTH_SHORT).show()
+                } else {
+            scheduleReminders(id ?: 0L, siembra, inicioPrep)
+            findNavController().popBackStack()
+                }
+            }
         } else {
             viewModel.update(
                 CicloProduccion(
                     id = args.cicloId,
-                    nombreCiclo = nombre,
+                    numeroCiclo = numeroCiclo,
                     variedad = variedad,
                     numeroPlantas = numero,
                     fechaInicioPreparacionTierra = inicioPrep,
@@ -200,14 +235,44 @@ class ProduccionEditFragment : Fragment() {
                     fechaAbono = abono,
                     fechaSiembra = siembra,
                     fechaSuplementoMinerales = suplemento,
-                    fechaEstimadaCosecha = estimada,
+                    fechaEstimadaCosecha = selectedEstimado,
                     fechaRealCosecha = real,
                     notas = notas,
                     estado = viewModel.ciclo.value?.estado ?: "Planificado"
                 )
-            )
+        ) { ok, msg ->
+                if (!ok) {
+                    if (msg?.contains("Número de ciclo ya existe") == true) layoutNumeroCiclo.error = msg else Toast.makeText(requireContext(), msg ?: "Error", Toast.LENGTH_SHORT).show()
+                } else {
+            ReminderScheduler.cancelCycle(requireContext(), args.cicloId)
+            scheduleReminders(args.cicloId, siembra, inicioPrep)
+                    findNavController().popBackStack()
+                }
+            }
         }
-        findNavController().popBackStack()
+    }
+}
+
+private fun ProduccionEditFragment.scheduleReminders(cicloId: Long, siembra: Long?, inicioPrep: Long?) {
+    val now = System.currentTimeMillis()
+    val tag = ReminderScheduler.tagForCycle(cicloId)
+    // Recordatorio de preparación de terreno (si hay fecha de inicio y está en el futuro)
+    inicioPrep?.let {
+        val delay = it - now
+        if (delay > 0) ReminderScheduler.schedule(requireContext(), delay, "Preparación de terreno", "Inicia preparación del ciclo #$cicloId", (cicloId * 10 + 1).toInt(), tag)
+    }
+    // Fecha estimada de cosecha: 8 semanas (56 días) después de siembra
+    siembra?.let {
+        val ochoSemanas = 56L * 24 * 60 * 60 * 1000
+        val delay = it + ochoSemanas - now
+        if (delay > 0) ReminderScheduler.schedule(requireContext(), delay, "Cosecha estimada", "Revisa cosecha ciclo #$cicloId", (cicloId * 10 + 2).toInt(), tag)
+        // Suplemento de potasio: 3 veces, cada semana tras la siembra
+        val unaSemana = 7L * 24 * 60 * 60 * 1000
+        for (i in 1..3) {
+            val whenTs = it + i * unaSemana
+            val d = whenTs - now
+            if (d > 0) ReminderScheduler.schedule(requireContext(), d, "Suplemento de potasio", "Aplicación ${i}/3 ciclo #$cicloId", (cicloId * 10 + 2 + i).toInt(), tag)
+        }
     }
 }
 
@@ -227,12 +292,29 @@ private fun ProduccionEditFragment.showDatePicker(title: String, current: Long?,
 class ProduccionEditViewModel(private val repository: CicloProduccionRepository, cicloId: Long) : ViewModel() {
     val ciclo = repository.obtenerCicloPorId(cicloId)
 
-    fun insert(c: CicloProduccion) {
-        viewModelScope.launch { repository.insert(c) }
+    fun insert(c: CicloProduccion, onComplete: (Boolean, String?, Long?) -> Unit = { _, _, _ -> }) {
+        viewModelScope.launch {
+            val num = c.numeroCiclo
+            if (num != null && repository.existeNumeroCiclo(num, null)) {
+                onComplete(false, "Número de ciclo ya existe", null)
+            } else {
+                val id = repository.insert(c)
+                onComplete(true, null, id)
+            }
+        }
     }
 
-    fun update(c: CicloProduccion) {
-        viewModelScope.launch { repository.update(c) }
+    fun update(c: CicloProduccion, onComplete: (Boolean, String?) -> Unit = { _, _ -> }) {
+        viewModelScope.launch {
+            val num = c.numeroCiclo
+            val currentId = c.id.takeIf { it != 0L }
+            if (num != null && repository.existeNumeroCiclo(num, currentId)) {
+                onComplete(false, "Número de ciclo ya existe")
+            } else {
+                repository.update(c)
+                onComplete(true, null)
+            }
+        }
     }
 
     class Factory(private val repo: CicloProduccionRepository, private val id: Long) : ViewModelProvider.Factory {

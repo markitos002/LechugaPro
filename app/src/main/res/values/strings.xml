@@ -21,10 +21,11 @@
         <item>Cancelado</item>
     </string-array>
     <string-array name="variedades_lechuga">
-        <item>Romana</item>
-        <item>Iceberg</item>
-        <item>Trocadero</item>
-        <item>Hoja de Roble</item>
-        <item>Maravilla</item>
+        <item>crespa</item>
+        <item>morada</item>
+        <item>romana</item>
+        <item>rucula</item>
+        <item>lisa</item>
+        <item>caipira</item>
     </string-array>
 </resources>

@@ -107,7 +107,7 @@ private class CicloVH(view: View) : androidx.recyclerview.widget.RecyclerView.Vi
     private val fechas = view.findViewById<android.widget.TextView>(eu.villacristina.lechugapro.R.id.text_fechas)
     private val df = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     fun bind(c: CicloProduccion) {
-        nombre.text = c.nombreCiclo ?: "(Sin nombre)"
+    nombre.text = c.numeroCiclo?.toString() ?: "(Sin número)"
         variedad.text = "Variedad: ${c.variedad ?: "-"}"
         estado.text = "Estado: ${c.estado}"
         val siembra = c.fechaSiembra?.let { df.format(Date(it)) } ?: "?"

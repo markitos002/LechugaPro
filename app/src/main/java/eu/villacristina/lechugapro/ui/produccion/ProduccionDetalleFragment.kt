@@ -72,7 +72,7 @@ class ProduccionDetalleFragment : Fragment() {
     }
 
     private fun bind(c: CicloProduccion) {
-        nombre.text = c.nombreCiclo ?: "(Sin nombre)"
+    nombre.text = c.numeroCiclo?.toString() ?: "(Sin número)"
         estado.text = "Estado: ${c.estado}"
         variedad.text = "Variedad: ${c.variedad ?: "-"}"
         numero.text = "Plantas: ${c.numeroPlantas}"

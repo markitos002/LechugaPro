@@ -10,11 +10,15 @@ class CicloProduccionRepository(private val cicloProduccionDao: CicloProduccionD
         return cicloProduccionDao.getById(id)
     }
 
-    suspend fun insert(ciclo: CicloProduccion) {
-        cicloProduccionDao.insert(ciclo)
+    suspend fun insert(ciclo: CicloProduccion): Long {
+        return cicloProduccionDao.insert(ciclo)
     }
 
     suspend fun update(ciclo: CicloProduccion) {
         cicloProduccionDao.update(ciclo)
+    }
+
+    suspend fun existeNumeroCiclo(numero: Int, excludeId: Long? = null): Boolean {
+        return cicloProduccionDao.existsByNumeroCiclo(numero, excludeId)
     }
 }

@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [CicloProduccion::class, Cliente::class, Ingreso::class], version = 4, exportSchema = false)
+@Database(entities = [CicloProduccion::class, Cliente::class, Ingreso::class], version = 8, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun cicloProduccionDao(): CicloProduccionDao
@@ -25,8 +25,8 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "lechuga_pro_database"
                 )
-                // Añadimos migración 3->4 para cambiar tipo de columna fecha de TEXT a INTEGER
-                .addMigrations(MIGRATION_3_4)
+                // Migraciones
+                .addMigrations(MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8)
                 .fallbackToDestructiveMigration()
                 .build()
                 INSTANCE = instance
@@ -64,5 +64,116 @@ abstract class AppDatabase : RoomDatabase() {
                 database.execSQL("CREATE INDEX IF NOT EXISTS index_ingresos_id_cliente ON ingresos(id_cliente)")
             }
         }
+    }
+}
+
+// Migración 4->5: Renombrar columna ciclos_produccion.nombreCiclo -> numeroCiclo
+val MIGRATION_4_5 = object : Migration(4, 5) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        // Crear nueva tabla con la columna ya renombrada
+        database.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS ciclos_produccion_new (
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                numeroCiclo TEXT,
+                variedad TEXT,
+                numeroPlantas INTEGER NOT NULL,
+                fechaInicioPreparacionTierra INTEGER,
+                fechaFinPreparacionTierra INTEGER,
+                fechaAbono INTEGER,
+                fechaSiembra INTEGER,
+                fechaSuplementoMinerales INTEGER,
+                fechaEstimadaCosecha INTEGER,
+                fechaRealCosecha INTEGER,
+                notas TEXT,
+                estado TEXT NOT NULL
+            )
+            """.trimIndent()
+        )
+        // Copiar datos desde la tabla antigua mapeando nombreCiclo -> numeroCiclo
+        // Si nombreCiclo no existe (p.ej. DB fresca), este INSERT fallaría; por eso protegemos con verificación básica
+        try {
+            database.execSQL(
+                """
+                INSERT INTO ciclos_produccion_new (
+                    id, numeroCiclo, variedad, numeroPlantas,
+                    fechaInicioPreparacionTierra, fechaFinPreparacionTierra, fechaAbono,
+                    fechaSiembra, fechaSuplementoMinerales, fechaEstimadaCosecha,
+                    fechaRealCosecha, notas, estado
+                )
+                SELECT id, nombreCiclo, variedad, numeroPlantas,
+                       fechaInicioPreparacionTierra, fechaFinPreparacionTierra, fechaAbono,
+                       fechaSiembra, fechaSuplementoMinerales, fechaEstimadaCosecha,
+                       fechaRealCosecha, notas, estado
+                FROM ciclos_produccion;
+                """.trimIndent()
+            )
+            database.execSQL("DROP TABLE ciclos_produccion")
+            database.execSQL("ALTER TABLE ciclos_produccion_new RENAME TO ciclos_produccion")
+        } catch (_: Exception) {
+            // Si la tabla ya tiene numeroCiclo (por instalaciones nuevas), solo aseguramos el esquema
+            database.execSQL("DROP TABLE IF EXISTS ciclos_produccion_new")
+        }
+    }
+}
+
+// Migración 5->6: Cambiar tipo de numeroCiclo de TEXT a INTEGER (nullable)
+val MIGRATION_5_6 = object : Migration(5, 6) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS ciclos_produccion_tmp (
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                numeroCiclo INTEGER,
+                variedad TEXT,
+                numeroPlantas INTEGER NOT NULL,
+                fechaInicioPreparacionTierra INTEGER,
+                fechaFinPreparacionTierra INTEGER,
+                fechaAbono INTEGER,
+                fechaSiembra INTEGER,
+                fechaSuplementoMinerales INTEGER,
+                fechaEstimadaCosecha INTEGER,
+                fechaRealCosecha INTEGER,
+                notas TEXT,
+                estado TEXT NOT NULL
+            )
+            """.trimIndent()
+        )
+        // Copiar datos: convertir numeroCiclo de TEXT a INTEGER si es posible; si no, dejar NULL
+        database.execSQL(
+            """
+            INSERT INTO ciclos_produccion_tmp (
+                id, numeroCiclo, variedad, numeroPlantas,
+                fechaInicioPreparacionTierra, fechaFinPreparacionTierra, fechaAbono,
+                fechaSiembra, fechaSuplementoMinerales, fechaEstimadaCosecha,
+                fechaRealCosecha, notas, estado
+            )
+            SELECT id,
+                   CAST(NULLIF(TRIM(numeroCiclo), '') AS INTEGER),
+                   variedad, numeroPlantas,
+                   fechaInicioPreparacionTierra, fechaFinPreparacionTierra, fechaAbono,
+                   fechaSiembra, fechaSuplementoMinerales, fechaEstimadaCosecha,
+                   fechaRealCosecha, notas, estado
+            FROM ciclos_produccion;
+            """.trimIndent()
+        )
+        database.execSQL("DROP TABLE ciclos_produccion")
+        database.execSQL("ALTER TABLE ciclos_produccion_tmp RENAME TO ciclos_produccion")
+    }
+}
+
+// Migración 6->7: Crear índice sobre numeroCiclo
+val MIGRATION_6_7 = object : Migration(6, 7) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("CREATE INDEX IF NOT EXISTS index_ciclos_produccion_numeroCiclo ON ciclos_produccion(numeroCiclo)")
+    }
+}
+
+// Migración 7->8: Crear índice único sobre numeroCiclo
+val MIGRATION_7_8 = object : Migration(7, 8) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        // Eliminar índice previo si existe y luego crear uno único
+        database.execSQL("DROP INDEX IF EXISTS index_ciclos_produccion_numeroCiclo")
+        database.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS index_ciclos_produccion_numeroCiclo ON ciclos_produccion(numeroCiclo)")
     }
 }
