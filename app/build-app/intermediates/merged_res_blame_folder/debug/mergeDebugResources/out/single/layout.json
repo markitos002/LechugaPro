@@ -4,14 +4,6 @@
         "source": "C:\\Users\\marco\\.jdks\\corretto-17.0.12\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-61:\\layout\\fragment_ingreso_lista.xml"
     },
     {
-        "merged": "eu.villacristina.lechugapro.app-mergeDebugResources-58:/layout/fragment_produccion_edit.xml",
-        "source": "eu.villacristina.lechugapro.app-main-61:/layout/fragment_produccion_edit.xml"
-    },
-    {
-        "merged": "eu.villacristina.lechugapro.app-mergeDebugResources-58:/layout/item_ciclo_produccion.xml",
-        "source": "eu.villacristina.lechugapro.app-main-61:/layout/item_ciclo_produccion.xml"
-    },
-    {
         "merged": "C:\\Users\\marco\\.jdks\\corretto-17.0.12\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-58:\\layout\\fragment_cliente_lista.xml",
         "source": "C:\\Users\\marco\\.jdks\\corretto-17.0.12\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-61:\\layout\\fragment_cliente_lista.xml"
     },
@@ -54,6 +46,10 @@
     {
         "merged": "C:\\Users\\marco\\.jdks\\corretto-17.0.12\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-58:\\layout\\fragment_inicio.xml",
         "source": "C:\\Users\\marco\\.jdks\\corretto-17.0.12\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-61:\\layout\\fragment_inicio.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-mergeDebugResources-58:/layout/item_cliente.xml",
+        "source": "eu.villacristina.lechugapro.app-main-61:/layout/item_cliente.xml"
     },
     {
         "merged": "C:\\Users\\marco\\.jdks\\corretto-17.0.12\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-58:\\layout\\fragment_cliente_detalle.xml",
