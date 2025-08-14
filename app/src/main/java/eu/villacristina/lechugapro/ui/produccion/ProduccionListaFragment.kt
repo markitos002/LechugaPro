@@ -25,7 +25,7 @@ class ProduccionListaFragment : Fragment() {
 
     private val viewModel: ProduccionListaViewModel by viewModels {
         val app = requireActivity().application as LechugaProApplication
-        val repo = CicloProduccionRepository(app.database.cicloProduccionDao())
+    val repo = CicloProduccionRepository(app.database.cicloProduccionDao())
         ProduccionListaViewModel.Factory(repo)
     }
 
@@ -44,6 +44,10 @@ class ProduccionListaFragment : Fragment() {
             val action = ProduccionListaFragmentDirections.actionProduccionListaFragmentToProduccionEditFragment()
             findNavController().navigate(action)
         }
+        binding.fabHistory.setOnClickListener {
+            val action = ProduccionListaFragmentDirections.actionProduccionListaFragmentToProduccionHistorialFragment()
+            findNavController().navigate(action)
+        }
     }
 
     private fun setupRecycler() {
@@ -57,7 +61,7 @@ class ProduccionListaFragment : Fragment() {
     }
 
     private fun observeData() {
-        viewModel.ciclos.observe(viewLifecycleOwner) { lista ->
+    viewModel.ciclos.observe(viewLifecycleOwner) { lista ->
             adapter.submit(lista)
             binding.textEmpty.visibility = if (lista.isEmpty()) View.VISIBLE else View.GONE
         }
@@ -70,7 +74,7 @@ class ProduccionListaFragment : Fragment() {
 }
 
 class ProduccionListaViewModel(private val repository: CicloProduccionRepository) : ViewModel() {
-    val ciclos = repository.todosLosCiclos
+    val ciclos = repository.ciclosActivos
 
     @Suppress("UNCHECKED_CAST")
     class Factory(private val repository: CicloProduccionRepository) : ViewModelProvider.Factory {

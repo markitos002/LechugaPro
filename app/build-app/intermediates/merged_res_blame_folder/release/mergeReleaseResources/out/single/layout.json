@@ -12,6 +12,10 @@
         "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-60:\\layout\\fragment_produccion_lista.xml"
     },
     {
+        "merged": "eu.villacristina.lechugapro.app-mergeReleaseResources-58:/layout/item_ciclo_produccion_hist.xml",
+        "source": "eu.villacristina.lechugapro.app-main-60:/layout/item_ciclo_produccion_hist.xml"
+    },
+    {
         "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeReleaseResources-58:\\layout\\item_ciclo_produccion.xml",
         "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-60:\\layout\\item_ciclo_produccion.xml"
     },
@@ -24,16 +28,20 @@
         "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-60:\\layout\\fragment_inicio.xml"
     },
     {
+        "merged": "eu.villacristina.lechugapro.app-mergeReleaseResources-58:/layout/fragment_produccion_lista.xml",
+        "source": "eu.villacristina.lechugapro.app-main-60:/layout/fragment_produccion_lista.xml"
+    },
+    {
         "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeReleaseResources-58:\\layout\\fragment_produccion_edit.xml",
         "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-60:\\layout\\fragment_produccion_edit.xml"
     },
     {
-        "merged": "eu.villacristina.lechugapro.app-mergeReleaseResources-58:/layout/fragment_inicio.xml",
-        "source": "eu.villacristina.lechugapro.app-main-60:/layout/fragment_inicio.xml"
-    },
-    {
         "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeReleaseResources-58:\\layout\\fragment_ingreso_edit.xml",
         "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-60:\\layout\\fragment_ingreso_edit.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-mergeReleaseResources-58:/layout/fragment_produccion_historial.xml",
+        "source": "eu.villacristina.lechugapro.app-main-60:/layout/fragment_produccion_historial.xml"
     },
     {
         "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeReleaseResources-58:\\layout\\item_ingreso.xml",

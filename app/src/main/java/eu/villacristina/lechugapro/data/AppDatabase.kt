@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [CicloProduccion::class, Cliente::class, Ingreso::class], version = 8, exportSchema = false)
+@Database(entities = [CicloProduccion::class, Cliente::class, Ingreso::class], version = 9, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun cicloProduccionDao(): CicloProduccionDao
@@ -26,7 +26,7 @@ abstract class AppDatabase : RoomDatabase() {
                     "lechuga_pro_database"
                 )
                 // Migraciones
-                .addMigrations(MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8)
+                .addMigrations(MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9)
                 .fallbackToDestructiveMigration()
                 .build()
                 INSTANCE = instance
@@ -37,8 +37,8 @@ abstract class AppDatabase : RoomDatabase() {
         // Migración: ingresos.fecha (TEXT con timestamp) -> INTEGER (epoch millis)
         // Estrategia: crear tabla nueva, copiar datos casteando, reemplazar.
         val MIGRATION_3_4 = object : Migration(3, 4) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL(
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
                     """
                     CREATE TABLE IF NOT EXISTS ingresos_new (
                         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -52,16 +52,16 @@ abstract class AppDatabase : RoomDatabase() {
                     """.trimIndent()
                 )
                 // Copiar datos (CAST de texto a INTEGER); si algún valor no es convertible caerá en 0
-                database.execSQL(
+                db.execSQL(
                     """
                     INSERT INTO ingresos_new (id, id_cliente, fecha, concepto, importe, notas)
                     SELECT id, id_cliente, CAST(fecha AS INTEGER), concepto, importe, notas FROM ingresos;
                     """.trimIndent()
                 )
-                database.execSQL("DROP TABLE ingresos")
-                database.execSQL("ALTER TABLE ingresos_new RENAME TO ingresos")
+                db.execSQL("DROP TABLE ingresos")
+                db.execSQL("ALTER TABLE ingresos_new RENAME TO ingresos")
                 // Re-crear índices necesarios
-                database.execSQL("CREATE INDEX IF NOT EXISTS index_ingresos_id_cliente ON ingresos(id_cliente)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_ingresos_id_cliente ON ingresos(id_cliente)")
             }
         }
     }
@@ -69,9 +69,9 @@ abstract class AppDatabase : RoomDatabase() {
 
 // Migración 4->5: Renombrar columna ciclos_produccion.nombreCiclo -> numeroCiclo
 val MIGRATION_4_5 = object : Migration(4, 5) {
-    override fun migrate(database: SupportSQLiteDatabase) {
+    override fun migrate(db: SupportSQLiteDatabase) {
         // Crear nueva tabla con la columna ya renombrada
-        database.execSQL(
+        db.execSQL(
             """
             CREATE TABLE IF NOT EXISTS ciclos_produccion_new (
                 id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -93,7 +93,7 @@ val MIGRATION_4_5 = object : Migration(4, 5) {
         // Copiar datos desde la tabla antigua mapeando nombreCiclo -> numeroCiclo
         // Si nombreCiclo no existe (p.ej. DB fresca), este INSERT fallaría; por eso protegemos con verificación básica
         try {
-            database.execSQL(
+            db.execSQL(
                 """
                 INSERT INTO ciclos_produccion_new (
                     id, numeroCiclo, variedad, numeroPlantas,
@@ -108,19 +108,19 @@ val MIGRATION_4_5 = object : Migration(4, 5) {
                 FROM ciclos_produccion;
                 """.trimIndent()
             )
-            database.execSQL("DROP TABLE ciclos_produccion")
-            database.execSQL("ALTER TABLE ciclos_produccion_new RENAME TO ciclos_produccion")
+            db.execSQL("DROP TABLE ciclos_produccion")
+            db.execSQL("ALTER TABLE ciclos_produccion_new RENAME TO ciclos_produccion")
         } catch (_: Exception) {
             // Si la tabla ya tiene numeroCiclo (por instalaciones nuevas), solo aseguramos el esquema
-            database.execSQL("DROP TABLE IF EXISTS ciclos_produccion_new")
+            db.execSQL("DROP TABLE IF EXISTS ciclos_produccion_new")
         }
     }
 }
 
 // Migración 5->6: Cambiar tipo de numeroCiclo de TEXT a INTEGER (nullable)
 val MIGRATION_5_6 = object : Migration(5, 6) {
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL(
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL(
             """
             CREATE TABLE IF NOT EXISTS ciclos_produccion_tmp (
                 id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -140,7 +140,7 @@ val MIGRATION_5_6 = object : Migration(5, 6) {
             """.trimIndent()
         )
         // Copiar datos: convertir numeroCiclo de TEXT a INTEGER si es posible; si no, dejar NULL
-        database.execSQL(
+        db.execSQL(
             """
             INSERT INTO ciclos_produccion_tmp (
                 id, numeroCiclo, variedad, numeroPlantas,
@@ -157,23 +157,33 @@ val MIGRATION_5_6 = object : Migration(5, 6) {
             FROM ciclos_produccion;
             """.trimIndent()
         )
-        database.execSQL("DROP TABLE ciclos_produccion")
-        database.execSQL("ALTER TABLE ciclos_produccion_tmp RENAME TO ciclos_produccion")
+        db.execSQL("DROP TABLE ciclos_produccion")
+        db.execSQL("ALTER TABLE ciclos_produccion_tmp RENAME TO ciclos_produccion")
     }
 }
 
 // Migración 6->7: Crear índice sobre numeroCiclo
 val MIGRATION_6_7 = object : Migration(6, 7) {
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("CREATE INDEX IF NOT EXISTS index_ciclos_produccion_numeroCiclo ON ciclos_produccion(numeroCiclo)")
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("CREATE INDEX IF NOT EXISTS index_ciclos_produccion_numeroCiclo ON ciclos_produccion(numeroCiclo)")
     }
 }
 
 // Migración 7->8: Crear índice único sobre numeroCiclo
 val MIGRATION_7_8 = object : Migration(7, 8) {
-    override fun migrate(database: SupportSQLiteDatabase) {
+    override fun migrate(db: SupportSQLiteDatabase) {
         // Eliminar índice previo si existe y luego crear uno único
-        database.execSQL("DROP INDEX IF EXISTS index_ciclos_produccion_numeroCiclo")
-        database.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS index_ciclos_produccion_numeroCiclo ON ciclos_produccion(numeroCiclo)")
+        db.execSQL("DROP INDEX IF EXISTS index_ciclos_produccion_numeroCiclo")
+        db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS index_ciclos_produccion_numeroCiclo ON ciclos_produccion(numeroCiclo)")
+    }
+}
+
+// Migración 8->9: Agregar columnas persistidas para antifúngico y K1/K2/K3
+val MIGRATION_8_9 = object : Migration(8, 9) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("ALTER TABLE ciclos_produccion ADD COLUMN fechaAntifungico INTEGER")
+        db.execSQL("ALTER TABLE ciclos_produccion ADD COLUMN fechaK1 INTEGER")
+        db.execSQL("ALTER TABLE ciclos_produccion ADD COLUMN fechaK2 INTEGER")
+        db.execSQL("ALTER TABLE ciclos_produccion ADD COLUMN fechaK3 INTEGER")
     }
 }

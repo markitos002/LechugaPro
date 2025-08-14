@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_produccionListaFragment_to_produccionDetalleFragment"
             app:destination="@id/produccionDetalleFragment" />
+        <action
+            android:id="@+id/action_produccionListaFragment_to_produccionHistorialFragment"
+            app:destination="@id/produccionHistorialFragment" />
     </fragment>
 
     <fragment
@@ -47,6 +50,12 @@
             android:id="@+id/action_produccionDetalleFragment_to_produccionEditFragment"
             app:destination="@id/produccionEditFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/produccionHistorialFragment"
+        android:name="eu.villacristina.lechugapro.ui.produccion.ProduccionHistorialFragment"
+        android:label="Historial"
+        tools:layout="@layout/fragment_produccion_historial" />
 
     <!-- (Producción UI eliminada temporalmente: lista/detalle/edición) -->
 

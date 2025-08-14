@@ -25,16 +25,20 @@ public final class FragmentProduccionListaBinding implements ViewBinding {
   public final FloatingActionButton fabAdd;
 
   @NonNull
+  public final FloatingActionButton fabHistory;
+
+  @NonNull
   public final RecyclerView recyclerCiclos;
 
   @NonNull
   public final TextView textEmpty;
 
   private FragmentProduccionListaBinding(@NonNull ConstraintLayout rootView,
-      @NonNull FloatingActionButton fabAdd, @NonNull RecyclerView recyclerCiclos,
-      @NonNull TextView textEmpty) {
+      @NonNull FloatingActionButton fabAdd, @NonNull FloatingActionButton fabHistory,
+      @NonNull RecyclerView recyclerCiclos, @NonNull TextView textEmpty) {
     this.rootView = rootView;
     this.fabAdd = fabAdd;
+    this.fabHistory = fabHistory;
     this.recyclerCiclos = recyclerCiclos;
     this.textEmpty = textEmpty;
   }
@@ -72,6 +76,12 @@ public final class FragmentProduccionListaBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.fab_history;
+      FloatingActionButton fabHistory = ViewBindings.findChildViewById(rootView, id);
+      if (fabHistory == null) {
+        break missingId;
+      }
+
       id = R.id.recycler_ciclos;
       RecyclerView recyclerCiclos = ViewBindings.findChildViewById(rootView, id);
       if (recyclerCiclos == null) {
@@ -84,8 +94,8 @@ public final class FragmentProduccionListaBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentProduccionListaBinding((ConstraintLayout) rootView, fabAdd, recyclerCiclos,
-          textEmpty);
+      return new FragmentProduccionListaBinding((ConstraintLayout) rootView, fabAdd, fabHistory,
+          recyclerCiclos, textEmpty);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

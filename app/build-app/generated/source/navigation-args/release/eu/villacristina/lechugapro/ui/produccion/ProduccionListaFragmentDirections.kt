@@ -1,6 +1,7 @@
 package eu.villacristina.lechugapro.ui.produccion
 
 import android.os.Bundle
+import androidx.navigation.ActionOnlyNavDirections
 import androidx.navigation.NavDirections
 import eu.villacristina.lechugapro.R
 import kotlin.Int
@@ -41,5 +42,8 @@ public class ProduccionListaFragmentDirections private constructor() {
 
     public fun actionProduccionListaFragmentToProduccionDetalleFragment(cicloId: Long):
         NavDirections = ActionProduccionListaFragmentToProduccionDetalleFragment(cicloId)
+
+    public fun actionProduccionListaFragmentToProduccionHistorialFragment(): NavDirections =
+        ActionOnlyNavDirections(R.id.action_produccionListaFragment_to_produccionHistorialFragment)
   }
 }

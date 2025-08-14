@@ -27,6 +27,12 @@ data class CicloProduccion(
     var fechaEstimadaCosecha: Long? = null,
     var fechaRealCosecha: Long? = null,
 
+    // Nuevas fechas persistidas derivadas desde siembra
+    var fechaAntifungico: Long? = null,
+    var fechaK1: Long? = null,
+    var fechaK2: Long? = null,
+    var fechaK3: Long? = null,
+
     var notas: String? = null,
     var estado: String = "Planificado"
 )

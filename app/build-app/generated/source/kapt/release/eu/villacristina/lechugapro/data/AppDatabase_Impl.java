@@ -36,16 +36,16 @@ public final class AppDatabase_Impl extends AppDatabase {
   @Override
   @NonNull
   protected SupportSQLiteOpenHelper createOpenHelper(@NonNull final DatabaseConfiguration config) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(8) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(9) {
       @Override
       public void createAllTables(@NonNull final SupportSQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS `ciclos_produccion` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `numeroCiclo` INTEGER, `variedad` TEXT, `numeroPlantas` INTEGER NOT NULL, `fechaInicioPreparacionTierra` INTEGER, `fechaFinPreparacionTierra` INTEGER, `fechaAbono` INTEGER, `fechaSiembra` INTEGER, `fechaSuplementoMinerales` INTEGER, `fechaEstimadaCosecha` INTEGER, `fechaRealCosecha` INTEGER, `notas` TEXT, `estado` TEXT NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `ciclos_produccion` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `numeroCiclo` INTEGER, `variedad` TEXT, `numeroPlantas` INTEGER NOT NULL, `fechaInicioPreparacionTierra` INTEGER, `fechaFinPreparacionTierra` INTEGER, `fechaAbono` INTEGER, `fechaSiembra` INTEGER, `fechaSuplementoMinerales` INTEGER, `fechaEstimadaCosecha` INTEGER, `fechaRealCosecha` INTEGER, `fechaAntifungico` INTEGER, `fechaK1` INTEGER, `fechaK2` INTEGER, `fechaK3` INTEGER, `notas` TEXT, `estado` TEXT NOT NULL)");
         db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_ciclos_produccion_numeroCiclo` ON `ciclos_produccion` (`numeroCiclo`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `clientes` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nombreCompleto` TEXT NOT NULL, `telefono` TEXT, `email` TEXT, `direccion` TEXT, `notasCliente` TEXT)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `ingresos` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `id_cliente` INTEGER NOT NULL, `fecha` INTEGER NOT NULL, `concepto` TEXT NOT NULL, `importe` REAL NOT NULL, `notas` TEXT, FOREIGN KEY(`id_cliente`) REFERENCES `clientes`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_ingresos_id_cliente` ON `ingresos` (`id_cliente`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4f0508904ae9330034d01d5f1404610c')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5c42ff3fec6c29bba045b7b25ae90a40')");
       }
 
       @Override
@@ -97,7 +97,7 @@ public final class AppDatabase_Impl extends AppDatabase {
       @NonNull
       public RoomOpenHelper.ValidationResult onValidateSchema(
           @NonNull final SupportSQLiteDatabase db) {
-        final HashMap<String, TableInfo.Column> _columnsCiclosProduccion = new HashMap<String, TableInfo.Column>(13);
+        final HashMap<String, TableInfo.Column> _columnsCiclosProduccion = new HashMap<String, TableInfo.Column>(17);
         _columnsCiclosProduccion.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsCiclosProduccion.put("numeroCiclo", new TableInfo.Column("numeroCiclo", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsCiclosProduccion.put("variedad", new TableInfo.Column("variedad", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
@@ -109,6 +109,10 @@ public final class AppDatabase_Impl extends AppDatabase {
         _columnsCiclosProduccion.put("fechaSuplementoMinerales", new TableInfo.Column("fechaSuplementoMinerales", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsCiclosProduccion.put("fechaEstimadaCosecha", new TableInfo.Column("fechaEstimadaCosecha", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsCiclosProduccion.put("fechaRealCosecha", new TableInfo.Column("fechaRealCosecha", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsCiclosProduccion.put("fechaAntifungico", new TableInfo.Column("fechaAntifungico", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsCiclosProduccion.put("fechaK1", new TableInfo.Column("fechaK1", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsCiclosProduccion.put("fechaK2", new TableInfo.Column("fechaK2", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsCiclosProduccion.put("fechaK3", new TableInfo.Column("fechaK3", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsCiclosProduccion.put("notas", new TableInfo.Column("notas", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsCiclosProduccion.put("estado", new TableInfo.Column("estado", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysCiclosProduccion = new HashSet<TableInfo.ForeignKey>(0);
@@ -157,7 +161,7 @@ public final class AppDatabase_Impl extends AppDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "4f0508904ae9330034d01d5f1404610c", "124420343a53f01db420cec2fa6d7d19");
+    }, "5c42ff3fec6c29bba045b7b25ae90a40", "557a321a351b2c03050500cfe01bb356");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
