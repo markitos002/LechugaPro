@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.Flow
 
 class ClienteListaViewModel(
     repository: ClienteRepository,
@@ -30,6 +31,15 @@ class ClienteListaViewModel(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = 0.0
+        )
+
+    // IDs de clientes con al menos un ingreso marcado como "En deuda"
+    val clientesConDeuda: StateFlow<Set<Long>> = ingresoRepository.todosLosIngresos
+        .map { lista -> lista.filter { it.estadoPago == "En deuda" }.map { it.idCliente }.toSet() }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptySet()
         )
 }
 

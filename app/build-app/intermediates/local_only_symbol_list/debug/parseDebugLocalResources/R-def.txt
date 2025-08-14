@@ -30,6 +30,7 @@ id action_produccionListaFragment_to_produccionDetalleFragment
 id action_produccionListaFragment_to_produccionEditFragment
 id action_produccionListaFragment_to_produccionHistorialFragment
 id actions_row
+id autoCompleteEstadoPago
 id bottom_navigation
 id btn_archivar
 id btn_clientes
@@ -63,7 +64,6 @@ id detalle_variedad
 id editTextConceptoIngreso
 id editTextFechaIngreso
 id editTextImporteIngreso
-id editTextNotasIngreso
 id edit_text_direccion_cliente
 id edit_text_email_cliente
 id edit_text_nombre_cliente
@@ -111,9 +111,9 @@ id recyclerview_clientes
 id recyclerview_ingresos
 id subtitle
 id textFieldLayoutConceptoIngreso
+id textFieldLayoutEstadoPago
 id textFieldLayoutFechaIngreso
 id textFieldLayoutImporteIngreso
-id textFieldLayoutNotasIngreso
 id text_empty
 id text_empty_hist
 id text_estado

@@ -29,13 +29,14 @@ class IngresoEditViewModel(
         }
     }
 
-    fun guardarIngreso(fechaMillis: Long, concepto: String, importe: Double, notas: String) {
+    fun guardarIngreso(fechaMillis: Long, concepto: String, importe: Double, estadoPago: String, notas: String? = null) {
         val ingresoActual = _ingreso.value
         if (ingresoActual != null) { // Editar
             val ingresoActualizado = ingresoActual.copy(
                 fecha = fechaMillis,
                 concepto = concepto,
                 importe = importe,
+                estadoPago = estadoPago,
                 notas = notas
             )
             update(ingresoActualizado)
@@ -45,7 +46,8 @@ class IngresoEditViewModel(
                 fecha = fechaMillis,
                 concepto = concepto,
                 importe = importe,
-                notas = notas.ifBlank { null }
+                estadoPago = estadoPago,
+                notas = notas
             )
             insert(nuevoIngreso)
         }

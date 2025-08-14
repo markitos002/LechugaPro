@@ -15,6 +15,7 @@ import eu.villacristina.lechugapro.data.IngresoRepository
 import eu.villacristina.lechugapro.databinding.FragmentClienteListaBinding
 import eu.villacristina.lechugapro.util.CurrencyFormatter
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 class ClienteListaFragment : Fragment() {
@@ -51,9 +52,12 @@ class ClienteListaFragment : Fragment() {
         binding.recyclerviewClientes.layoutManager = LinearLayoutManager(requireContext())
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.todosLosClientes.collectLatest { clientes ->
-                adapter.submitList(clientes)
+            viewModel.clientesConDeuda.collectLatest { deudaIds ->
+                adapter.updateDeudaIds(deudaIds)
             }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.todosLosClientes.collectLatest { clientes -> adapter.submitList(clientes) }
         }
 
         // Bind total ingresos

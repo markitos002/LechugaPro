@@ -31,5 +31,7 @@ data class Ingreso(
     val fecha: Long,
     val concepto: String,
     val importe: Double,
+    @ColumnInfo(name = "estado_pago")
+    val estadoPago: String = "Pagado",
     val notas: String? = null
 )

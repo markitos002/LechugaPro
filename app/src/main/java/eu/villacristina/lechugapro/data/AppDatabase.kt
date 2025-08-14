@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [CicloProduccion::class, Cliente::class, Ingreso::class], version = 9, exportSchema = false)
+@Database(entities = [CicloProduccion::class, Cliente::class, Ingreso::class], version = 10, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun cicloProduccionDao(): CicloProduccionDao
@@ -26,7 +26,7 @@ abstract class AppDatabase : RoomDatabase() {
                     "lechuga_pro_database"
                 )
                 // Migraciones
-                .addMigrations(MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9)
+                .addMigrations(MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10)
                 .fallbackToDestructiveMigration()
                 .build()
                 INSTANCE = instance
@@ -185,5 +185,17 @@ val MIGRATION_8_9 = object : Migration(8, 9) {
         db.execSQL("ALTER TABLE ciclos_produccion ADD COLUMN fechaK1 INTEGER")
         db.execSQL("ALTER TABLE ciclos_produccion ADD COLUMN fechaK2 INTEGER")
         db.execSQL("ALTER TABLE ciclos_produccion ADD COLUMN fechaK3 INTEGER")
+    }
+}
+
+// Migración 9->10: Agregar columna estado_pago a ingresos y rellenar desde notas si coincide
+val MIGRATION_9_10 = object : Migration(9, 10) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        // Añadir columna con valor por defecto 'Pagado'
+        db.execSQL("ALTER TABLE ingresos ADD COLUMN estado_pago TEXT NOT NULL DEFAULT 'Pagado'")
+        // Si la columna notas contiene exactamente 'En deuda' o 'Pagado', usarla para estado_pago
+        // Cualquier otro valor en notas se conserva como notas
+        db.execSQL("UPDATE ingresos SET estado_pago = 'En deuda' WHERE notas = 'En deuda'")
+        db.execSQL("UPDATE ingresos SET estado_pago = 'Pagado' WHERE notas = 'Pagado'")
     }
 }

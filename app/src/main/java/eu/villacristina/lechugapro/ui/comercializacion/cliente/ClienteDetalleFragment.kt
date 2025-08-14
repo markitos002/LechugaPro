@@ -150,7 +150,7 @@ class ClienteDetalleFragment : Fragment() {
         // Primera línea: encabezado con el nombre del cliente
         fw.appendLine("Cliente: ${cliente.nombreCompleto}")
         // Segunda línea: cabecera de columnas (incluye importe plano y formateado)
-        fw.appendLine("Fecha,Concepto,Importe,Importe formateado,Notas")
+                fw.appendLine("Fecha,Concepto,Importe,Importe formateado,Estado pago,Notas")
                 val df = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 ingresos.forEach { ing ->
                     val fecha = df.format(Date(ing.fecha))
@@ -158,8 +158,9 @@ class ClienteDetalleFragment : Fragment() {
                     val importePlano = ing.importe
                     val importeTxt = CurrencyFormatter.formatPeso(ing.importe)
                     val concepto = ing.concepto.replace(",", " ")
+                    val estado = ing.estadoPago.replace(",", " ")
                     val notas = (ing.notas ?: "").replace(",", " ")
-                    fw.appendLine("$fecha,$concepto,$importePlano,$importeTxt,$notas")
+                    fw.appendLine("$fecha,$concepto,$importePlano,$importeTxt,$estado,$notas")
                 }
             }
             val uri = FileProvider.getUriForFile(requireContext(), requireContext().packageName + ".fileprovider", file)

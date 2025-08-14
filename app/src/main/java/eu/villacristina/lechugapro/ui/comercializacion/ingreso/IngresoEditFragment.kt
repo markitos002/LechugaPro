@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -51,6 +52,13 @@ class IngresoEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+    // Opciones para estado de pago
+    val opcionesEstado = listOf("Pagado", "En deuda")
+    val adapterEstado = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, opcionesEstado)
+    binding.autoCompleteEstadoPago.setAdapter(adapterEstado)
+    // Valor por defecto
+    binding.autoCompleteEstadoPago.setText("Pagado", false)
+
         // Deshabilitar edición manual y abrir date picker al tocar el campo
         binding.editTextFechaIngreso.isFocusable = false
         binding.editTextFechaIngreso.isClickable = true
@@ -69,7 +77,7 @@ class IngresoEditFragment : Fragment() {
         }
 
         // Si estamos editando (ingresoId != -1L), observar y rellenar los campos
-        if (args.ingresoId != -1L) {
+    if (args.ingresoId != -1L) {
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.ingreso.collectLatest { ingreso ->
                     ingreso?.let {
@@ -77,7 +85,8 @@ class IngresoEditFragment : Fragment() {
                         binding.editTextFechaIngreso.setText(dateFormatter.format(Date(it.fecha)))
                         binding.editTextConceptoIngreso.setText(it.concepto)
                         binding.editTextImporteIngreso.setText(it.importe.toString())
-                        binding.editTextNotasIngreso.setText(it.notas)
+            val estado = if (opcionesEstado.contains(it.notas)) it.notas else "Pagado"
+            binding.autoCompleteEstadoPago.setText(estado, false)
                         requireActivity().title = "Editar Ingreso"
                     }
                 }
@@ -98,7 +107,7 @@ class IngresoEditFragment : Fragment() {
         val fechaStr = binding.editTextFechaIngreso.text.toString().trim()
         val concepto = binding.editTextConceptoIngreso.text.toString().trim()
         val importeStr = binding.editTextImporteIngreso.text.toString().trim()
-        val notas = binding.editTextNotasIngreso.text.toString().trim()
+    val estadoPago = binding.autoCompleteEstadoPago.text.toString().trim().ifBlank { "Pagado" }
 
         if (fechaStr.isEmpty() || concepto.isEmpty() || importeStr.isEmpty()) {
             Toast.makeText(requireContext(), "Fecha, Concepto e Importe son obligatorios", Toast.LENGTH_SHORT).show()
@@ -127,7 +136,7 @@ class IngresoEditFragment : Fragment() {
             return
         }
 
-    viewModel.guardarIngreso(fechaLong, concepto, importeDouble, notas)
+    viewModel.guardarIngreso(fechaLong, concepto, importeDouble, estadoPago, null)
 
         Toast.makeText(requireContext(), "Ingreso guardado", Toast.LENGTH_SHORT).show()
         findNavController().navigateUp() // Volver a la pantalla anterior

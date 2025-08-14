@@ -60,22 +60,20 @@
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Notas Adicionales -->
+        <!-- Estado de pago (Pagado / En deuda) -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textFieldLayoutNotasIngreso"
+            android:id="@+id/textFieldLayoutEstadoPago"
             style="?attr/textInputFilledStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:hint="Notas (opcional)">
+            android:hint="Estado de pago">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextNotasIngreso"
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/autoCompleteEstadoPago"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="top"
-                android:inputType="textMultiLine|textCapSentences"
-                android:minLines="3" />
+                android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button

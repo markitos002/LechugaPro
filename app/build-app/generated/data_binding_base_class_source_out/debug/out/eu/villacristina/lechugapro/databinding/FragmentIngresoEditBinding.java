@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import eu.villacristina.lechugapro.R;
@@ -20,6 +21,9 @@ import java.lang.String;
 public final class FragmentIngresoEditBinding implements ViewBinding {
   @NonNull
   private final ScrollView rootView;
+
+  @NonNull
+  public final MaterialAutoCompleteTextView autoCompleteEstadoPago;
 
   @NonNull
   public final Button buttonGuardarIngreso;
@@ -34,10 +38,10 @@ public final class FragmentIngresoEditBinding implements ViewBinding {
   public final TextInputEditText editTextImporteIngreso;
 
   @NonNull
-  public final TextInputEditText editTextNotasIngreso;
+  public final TextInputLayout textFieldLayoutConceptoIngreso;
 
   @NonNull
-  public final TextInputLayout textFieldLayoutConceptoIngreso;
+  public final TextInputLayout textFieldLayoutEstadoPago;
 
   @NonNull
   public final TextInputLayout textFieldLayoutFechaIngreso;
@@ -45,28 +49,25 @@ public final class FragmentIngresoEditBinding implements ViewBinding {
   @NonNull
   public final TextInputLayout textFieldLayoutImporteIngreso;
 
-  @NonNull
-  public final TextInputLayout textFieldLayoutNotasIngreso;
-
   private FragmentIngresoEditBinding(@NonNull ScrollView rootView,
+      @NonNull MaterialAutoCompleteTextView autoCompleteEstadoPago,
       @NonNull Button buttonGuardarIngreso, @NonNull TextInputEditText editTextConceptoIngreso,
       @NonNull TextInputEditText editTextFechaIngreso,
       @NonNull TextInputEditText editTextImporteIngreso,
-      @NonNull TextInputEditText editTextNotasIngreso,
       @NonNull TextInputLayout textFieldLayoutConceptoIngreso,
+      @NonNull TextInputLayout textFieldLayoutEstadoPago,
       @NonNull TextInputLayout textFieldLayoutFechaIngreso,
-      @NonNull TextInputLayout textFieldLayoutImporteIngreso,
-      @NonNull TextInputLayout textFieldLayoutNotasIngreso) {
+      @NonNull TextInputLayout textFieldLayoutImporteIngreso) {
     this.rootView = rootView;
+    this.autoCompleteEstadoPago = autoCompleteEstadoPago;
     this.buttonGuardarIngreso = buttonGuardarIngreso;
     this.editTextConceptoIngreso = editTextConceptoIngreso;
     this.editTextFechaIngreso = editTextFechaIngreso;
     this.editTextImporteIngreso = editTextImporteIngreso;
-    this.editTextNotasIngreso = editTextNotasIngreso;
     this.textFieldLayoutConceptoIngreso = textFieldLayoutConceptoIngreso;
+    this.textFieldLayoutEstadoPago = textFieldLayoutEstadoPago;
     this.textFieldLayoutFechaIngreso = textFieldLayoutFechaIngreso;
     this.textFieldLayoutImporteIngreso = textFieldLayoutImporteIngreso;
-    this.textFieldLayoutNotasIngreso = textFieldLayoutNotasIngreso;
   }
 
   @Override
@@ -96,6 +97,12 @@ public final class FragmentIngresoEditBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.autoCompleteEstadoPago;
+      MaterialAutoCompleteTextView autoCompleteEstadoPago = ViewBindings.findChildViewById(rootView, id);
+      if (autoCompleteEstadoPago == null) {
+        break missingId;
+      }
+
       id = R.id.buttonGuardarIngreso;
       Button buttonGuardarIngreso = ViewBindings.findChildViewById(rootView, id);
       if (buttonGuardarIngreso == null) {
@@ -120,15 +127,15 @@ public final class FragmentIngresoEditBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.editTextNotasIngreso;
-      TextInputEditText editTextNotasIngreso = ViewBindings.findChildViewById(rootView, id);
-      if (editTextNotasIngreso == null) {
-        break missingId;
-      }
-
       id = R.id.textFieldLayoutConceptoIngreso;
       TextInputLayout textFieldLayoutConceptoIngreso = ViewBindings.findChildViewById(rootView, id);
       if (textFieldLayoutConceptoIngreso == null) {
+        break missingId;
+      }
+
+      id = R.id.textFieldLayoutEstadoPago;
+      TextInputLayout textFieldLayoutEstadoPago = ViewBindings.findChildViewById(rootView, id);
+      if (textFieldLayoutEstadoPago == null) {
         break missingId;
       }
 
@@ -144,16 +151,10 @@ public final class FragmentIngresoEditBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.textFieldLayoutNotasIngreso;
-      TextInputLayout textFieldLayoutNotasIngreso = ViewBindings.findChildViewById(rootView, id);
-      if (textFieldLayoutNotasIngreso == null) {
-        break missingId;
-      }
-
-      return new FragmentIngresoEditBinding((ScrollView) rootView, buttonGuardarIngreso,
-          editTextConceptoIngreso, editTextFechaIngreso, editTextImporteIngreso,
-          editTextNotasIngreso, textFieldLayoutConceptoIngreso, textFieldLayoutFechaIngreso,
-          textFieldLayoutImporteIngreso, textFieldLayoutNotasIngreso);
+      return new FragmentIngresoEditBinding((ScrollView) rootView, autoCompleteEstadoPago,
+          buttonGuardarIngreso, editTextConceptoIngreso, editTextFechaIngreso,
+          editTextImporteIngreso, textFieldLayoutConceptoIngreso, textFieldLayoutEstadoPago,
+          textFieldLayoutFechaIngreso, textFieldLayoutImporteIngreso);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));
