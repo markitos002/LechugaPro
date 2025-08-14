@@ -43,24 +43,6 @@ class InicioFragment : Fragment() {
 			findNavController().navigate(R.id.produccionListaFragment)
 		}
 
-		view.findViewById<View>(R.id.btn_empezar).setOnClickListener {
-			showStartChooser()
-		}
-	}
-
-	private fun showStartChooser() {
-		val items = arrayOf("Clientes", "Ingresos", "Producción")
-		androidx.appcompat.app.AlertDialog.Builder(requireContext())
-			.setTitle("Ir a…")
-			.setItems(items) { dialog, which ->
-				when (which) {
-					0 -> findNavController().navigate(R.id.clienteListaFragment)
-					1 -> findNavController().navigate(R.id.ingresoListaFragment)
-					2 -> findNavController().navigate(R.id.produccionListaFragment)
-				}
-				dialog.dismiss()
-			}
-			.show()
 	}
 }
 

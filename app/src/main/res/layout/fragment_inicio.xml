@@ -38,19 +38,11 @@
             android:contentDescription="Logo"
             android:scaleType="fitCenter" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_empezar"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Empezar"
-            app:icon="@android:drawable/ic_media_play"
-            app:iconPadding="8dp" />
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_clientes"
-            style="@style/Widget.MaterialComponents.Button"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -63,7 +55,7 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:text="Ingresos"
             app:icon="@android:drawable/ic_menu_agenda"
             app:iconPadding="8dp" />
@@ -73,7 +65,7 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:text="Producción"
             app:icon="@android:drawable/ic_menu_week"
             app:iconPadding="8dp" />
