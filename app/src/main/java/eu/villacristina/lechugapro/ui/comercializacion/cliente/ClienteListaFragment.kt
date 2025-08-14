@@ -11,7 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import eu.villacristina.lechugapro.data.AppDatabase
 import eu.villacristina.lechugapro.data.ClienteRepository
+import eu.villacristina.lechugapro.data.IngresoRepository
 import eu.villacristina.lechugapro.databinding.FragmentClienteListaBinding
+import eu.villacristina.lechugapro.util.CurrencyFormatter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -21,8 +23,10 @@ class ClienteListaFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: ClienteListaViewModel by viewModels {
+        val db = AppDatabase.getDatabase(requireContext())
         ClienteListaViewModelFactory(
-            ClienteRepository(AppDatabase.getDatabase(requireContext()).clienteDao())
+            ClienteRepository(db.clienteDao()),
+            IngresoRepository(db.ingresoDao())
         )
     }
 
@@ -49,6 +53,13 @@ class ClienteListaFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.todosLosClientes.collectLatest { clientes ->
                 adapter.submitList(clientes)
+            }
+        }
+
+        // Bind total ingresos
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.totalIngresos.collectLatest { total ->
+                binding.textTotalIngresos.text = "Ingreso Total: ${CurrencyFormatter.formatPeso(total)}"
             }
         }
 
