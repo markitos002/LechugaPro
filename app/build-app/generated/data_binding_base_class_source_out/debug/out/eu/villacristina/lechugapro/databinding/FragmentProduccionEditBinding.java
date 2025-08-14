@@ -26,19 +26,19 @@ public final class FragmentProduccionEditBinding implements ViewBinding {
   public final Button buttonGuardar;
 
   @NonNull
-  public final TextInputEditText inputFechaAbono;
+  public final TextInputEditText inputFechaAntifungico;
 
   @NonNull
   public final TextInputEditText inputFechaEstimada;
 
   @NonNull
-  public final TextInputEditText inputFechaFinPrep;
+  public final TextInputEditText inputFechaK1;
 
   @NonNull
-  public final TextInputEditText inputFechaInicioPrep;
+  public final TextInputEditText inputFechaK2;
 
   @NonNull
-  public final TextInputEditText inputFechaRealCosecha;
+  public final TextInputEditText inputFechaK3;
 
   @NonNull
   public final TextInputEditText inputFechaSiembra;
@@ -59,20 +59,20 @@ public final class FragmentProduccionEditBinding implements ViewBinding {
   public final TextInputLayout layoutNumeroCiclo;
 
   private FragmentProduccionEditBinding(@NonNull ScrollView rootView, @NonNull Button buttonGuardar,
-      @NonNull TextInputEditText inputFechaAbono, @NonNull TextInputEditText inputFechaEstimada,
-      @NonNull TextInputEditText inputFechaFinPrep, @NonNull TextInputEditText inputFechaInicioPrep,
-      @NonNull TextInputEditText inputFechaRealCosecha,
+      @NonNull TextInputEditText inputFechaAntifungico,
+      @NonNull TextInputEditText inputFechaEstimada, @NonNull TextInputEditText inputFechaK1,
+      @NonNull TextInputEditText inputFechaK2, @NonNull TextInputEditText inputFechaK3,
       @NonNull TextInputEditText inputFechaSiembra, @NonNull TextInputEditText inputNombre,
       @NonNull TextInputEditText inputNotas, @NonNull TextInputEditText inputNumeroPlantas,
       @NonNull MaterialAutoCompleteTextView inputVariedad,
       @NonNull TextInputLayout layoutNumeroCiclo) {
     this.rootView = rootView;
     this.buttonGuardar = buttonGuardar;
-    this.inputFechaAbono = inputFechaAbono;
+    this.inputFechaAntifungico = inputFechaAntifungico;
     this.inputFechaEstimada = inputFechaEstimada;
-    this.inputFechaFinPrep = inputFechaFinPrep;
-    this.inputFechaInicioPrep = inputFechaInicioPrep;
-    this.inputFechaRealCosecha = inputFechaRealCosecha;
+    this.inputFechaK1 = inputFechaK1;
+    this.inputFechaK2 = inputFechaK2;
+    this.inputFechaK3 = inputFechaK3;
     this.inputFechaSiembra = inputFechaSiembra;
     this.inputNombre = inputNombre;
     this.inputNotas = inputNotas;
@@ -114,9 +114,9 @@ public final class FragmentProduccionEditBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.input_fecha_abono;
-      TextInputEditText inputFechaAbono = ViewBindings.findChildViewById(rootView, id);
-      if (inputFechaAbono == null) {
+      id = R.id.input_fecha_antifungico;
+      TextInputEditText inputFechaAntifungico = ViewBindings.findChildViewById(rootView, id);
+      if (inputFechaAntifungico == null) {
         break missingId;
       }
 
@@ -126,21 +126,21 @@ public final class FragmentProduccionEditBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.input_fecha_fin_prep;
-      TextInputEditText inputFechaFinPrep = ViewBindings.findChildViewById(rootView, id);
-      if (inputFechaFinPrep == null) {
+      id = R.id.input_fecha_k1;
+      TextInputEditText inputFechaK1 = ViewBindings.findChildViewById(rootView, id);
+      if (inputFechaK1 == null) {
         break missingId;
       }
 
-      id = R.id.input_fecha_inicio_prep;
-      TextInputEditText inputFechaInicioPrep = ViewBindings.findChildViewById(rootView, id);
-      if (inputFechaInicioPrep == null) {
+      id = R.id.input_fecha_k2;
+      TextInputEditText inputFechaK2 = ViewBindings.findChildViewById(rootView, id);
+      if (inputFechaK2 == null) {
         break missingId;
       }
 
-      id = R.id.input_fecha_real_cosecha;
-      TextInputEditText inputFechaRealCosecha = ViewBindings.findChildViewById(rootView, id);
-      if (inputFechaRealCosecha == null) {
+      id = R.id.input_fecha_k3;
+      TextInputEditText inputFechaK3 = ViewBindings.findChildViewById(rootView, id);
+      if (inputFechaK3 == null) {
         break missingId;
       }
 
@@ -181,9 +181,9 @@ public final class FragmentProduccionEditBinding implements ViewBinding {
       }
 
       return new FragmentProduccionEditBinding((ScrollView) rootView, buttonGuardar,
-          inputFechaAbono, inputFechaEstimada, inputFechaFinPrep, inputFechaInicioPrep,
-          inputFechaRealCosecha, inputFechaSiembra, inputNombre, inputNotas, inputNumeroPlantas,
-          inputVariedad, layoutNumeroCiclo);
+          inputFechaAntifungico, inputFechaEstimada, inputFechaK1, inputFechaK2, inputFechaK3,
+          inputFechaSiembra, inputNombre, inputNotas, inputNumeroPlantas, inputVariedad,
+          layoutNumeroCiclo);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

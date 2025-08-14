@@ -61,15 +61,16 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Campos derivados nuevos -->
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="Inicio preparación tierra (auto, 3 días antes de siembra)">
+            android:hint="Fecha antifúngico (auto, 5 días después de siembra)">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_fecha_inicio_prep"
+                android:id="@+id/input_fecha_antifungico"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -80,10 +81,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="Fin preparación tierra (auto, 1 día antes de siembra)">
+            android:hint="Fecha primer K (auto, 7 días después de siembra)">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_fecha_fin_prep"
+                android:id="@+id/input_fecha_k1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -94,10 +95,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="Fecha abono (dd/MM/yyyy)">
+            android:hint="Fecha segundo K (auto, 14 días después de siembra)">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_fecha_abono"
+                android:id="@+id/input_fecha_k2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Fecha tercer K (auto, 21 días después de siembra)">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_fecha_k3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -133,19 +148,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Fecha real de cosecha (dd/MM/yyyy)">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_fecha_real_cosecha"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

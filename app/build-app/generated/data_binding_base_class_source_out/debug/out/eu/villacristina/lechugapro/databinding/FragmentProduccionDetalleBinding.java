@@ -21,6 +21,9 @@ public final class FragmentProduccionDetalleBinding implements ViewBinding {
   private final ScrollView rootView;
 
   @NonNull
+  public final Button buttonArchivar;
+
+  @NonNull
   public final Button buttonEditar;
 
   @NonNull
@@ -48,11 +51,13 @@ public final class FragmentProduccionDetalleBinding implements ViewBinding {
   public final TextView detalleVariedad;
 
   private FragmentProduccionDetalleBinding(@NonNull ScrollView rootView,
-      @NonNull Button buttonEditar, @NonNull Button buttonIniciar, @NonNull Button buttonTerminar,
-      @NonNull TextView detalleEstado, @NonNull TextView detalleFechas,
-      @NonNull TextView detalleNombre, @NonNull TextView detalleNotas,
-      @NonNull TextView detalleNumero, @NonNull TextView detalleVariedad) {
+      @NonNull Button buttonArchivar, @NonNull Button buttonEditar, @NonNull Button buttonIniciar,
+      @NonNull Button buttonTerminar, @NonNull TextView detalleEstado,
+      @NonNull TextView detalleFechas, @NonNull TextView detalleNombre,
+      @NonNull TextView detalleNotas, @NonNull TextView detalleNumero,
+      @NonNull TextView detalleVariedad) {
     this.rootView = rootView;
+    this.buttonArchivar = buttonArchivar;
     this.buttonEditar = buttonEditar;
     this.buttonIniciar = buttonIniciar;
     this.buttonTerminar = buttonTerminar;
@@ -91,6 +96,12 @@ public final class FragmentProduccionDetalleBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.button_archivar;
+      Button buttonArchivar = ViewBindings.findChildViewById(rootView, id);
+      if (buttonArchivar == null) {
+        break missingId;
+      }
+
       id = R.id.button_editar;
       Button buttonEditar = ViewBindings.findChildViewById(rootView, id);
       if (buttonEditar == null) {
@@ -145,9 +156,9 @@ public final class FragmentProduccionDetalleBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentProduccionDetalleBinding((ScrollView) rootView, buttonEditar,
-          buttonIniciar, buttonTerminar, detalleEstado, detalleFechas, detalleNombre, detalleNotas,
-          detalleNumero, detalleVariedad);
+      return new FragmentProduccionDetalleBinding((ScrollView) rootView, buttonArchivar,
+          buttonEditar, buttonIniciar, buttonTerminar, detalleEstado, detalleFechas, detalleNombre,
+          detalleNotas, detalleNumero, detalleVariedad);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));
