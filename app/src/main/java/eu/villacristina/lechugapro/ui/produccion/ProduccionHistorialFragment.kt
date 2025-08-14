@@ -53,10 +53,7 @@ class ProduccionHistorialViewModel(private val repository: CicloProduccionReposi
     val ciclos = repository.ciclosArchivados
 
     fun restaurar(id: Long) {
-        viewModelScope.launch {
-            val actual = repository.obtenerCicloPorId(id).value ?: return@launch
-            repository.update(actual.copy(estado = "Planificado"))
-        }
+    viewModelScope.launch { repository.actualizarEstado(id, "Planificado") }
     }
 
     fun eliminar(id: Long) {

@@ -3295,6 +3295,7 @@ id btn_produccion
 id btn_restore
 id buttonGuardarIngreso
 id buttonPanel
+id button_archivar
 id button_editar
 id button_guardar
 id button_guardar_cliente

@@ -27,6 +27,10 @@ class CicloProduccionRepository(private val cicloProduccionDao: CicloProduccionD
         cicloProduccionDao.deleteById(id)
     }
 
+    suspend fun actualizarEstado(id: Long, estado: String) {
+        cicloProduccionDao.updateEstado(id, estado)
+    }
+
     suspend fun existeNumeroCiclo(numero: Int, excludeId: Long? = null): Boolean {
         return cicloProduccionDao.existsByNumeroCiclo(numero, excludeId)
     }

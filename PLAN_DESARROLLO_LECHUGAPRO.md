@@ -18,6 +18,17 @@
 *   [x] **Tarea 14: Implementar Edición de Ciclos Existentes**
 *   [x] **Tarea 15: Implementar Cambio de Estado del Ciclo**
 *   [x] **Tarea 16: Refactor UI Producción (reset de módulo y reconstrucción lista + edición + detalle + date pickers)**
+*   [x] **Tarea 17: Simplificación del formulario de Producción**
+    * Eliminados: Inicio/Fin de preparación, Fecha de abono, Fecha real de cosecha.
+    * Añadidos (derivados de siembra): Antifúngico (+5 días), K1 (+7), K2 (+14), K3 (+21) y Estimada de cosecha (+56).
+    * Persistencia: fechas derivadas guardadas en BD (fechaAntifungico/fechaK1/fechaK2/fechaK3).
+    * Migración Room 8→9 para agregar nuevas columnas.
+    * Recordatorios ajustados: Antifúngico (+5), K1/K2/K3 (+7/+14/+21) y Cosecha estimada (+56).
+*   [x] **Tarea 18: Archivado e Historial de ciclos**
+    * Lista principal muestra solo ciclos activos (no archivados).
+    * Nuevo Historial: lista de ciclos archivados con acciones Restaurar y Eliminar.
+    * Acción Archivar disponible cuando el ciclo está en estado “Terminado” (en Detalle) y también con pulsación larga desde la lista.
+    * Al archivar desde la lista se cancelan los recordatorios del ciclo.
 
 ## Fase 2: Módulo de Comercialización (Clientes e Ingresos)
 
@@ -61,13 +72,14 @@
 ## Backlog Técnico / Pendiente Detallado
 
 ### Producción
-1. Mostrar y editar fechas adicionales (preparación tierra, abono, suplemento, cosecha real) con MaterialDatePicker.
-2. Validar secuencia lógica de fechas (preparación <= siembra <= estimada <= real).
-3. Acciones rápidas para cambiar estado (chips o menú contextual) y registrar timestamps de transición de estado.
-4. Convertir adapter inline de lista de ciclos a `ProduccionListaAdapter` con DiffUtil (optimización).
-5. Soporte de borrado de ciclo (confirmación + undo Snackbar).
-6. Internacionalizar textos hardcode (strings.xml) y formato de fechas localizable.
-7. Tests unitarios ViewModels (insert/update/estado) y test instrumentado de navegación básica.
+1. Cancelar recordatorios también al archivar desde la pantalla de Detalle.
+2. Añadir acción visible “Archivar” en cada ítem de la lista (botón de acción secundaria) además del long-press.
+3. Mostrar toasts de confirmación para archivar/restaurar/eliminar en Historial y Lista.
+4. Limpiar columnas obsoletas en una migración futura (inicio/fin preparación, abono, real) o reutilizarlas si se reintroducen.
+5. Convertir adapter inline de lista de ciclos a `ProduccionListaAdapter` con DiffUtil (optimización).
+6. Internacionalizar textos nuevos (Archivar/Restaurar/Eliminar/Historial/recordatorios) y formato de fechas localizable.
+7. Tests unitarios: archivar/restaurar/eliminar, generación de fechas derivadas, programación y cancelación de recordatorios.
+8. Acciones rápidas para cambiar estado (chips o menú contextual) y registrar timestamps de transición de estado.
 
 ### Comercialización - Ingresos
 1. (Hecho) Swipe delete con undo.
@@ -92,8 +104,9 @@
 ---
 
 ## Próximo Sprint Propuesto (actualizado)
-1. Date picker en IngresoEditFragment (MaterialDatePicker) y bloqueo de entrada manual.
-2. Date pickers adicionales en Producción + validación de secuencia fechas.
+1. Cancelar recordatorios al archivar desde Detalle + toasts de confirmación (archivar/restaurar/eliminar).
+2. Acción “Archivar” visible en los ítems de la lista de Producción.
 3. Adapter Producción con DiffUtil.
-4. Internacionalización textos críticos + strings.xml.
-5. Tests unitarios básicos (ProduccionDetalleViewModel, IngresoEditViewModel).
+4. Date picker en IngresoEditFragment (MaterialDatePicker) y bloqueo de entrada manual.
+5. Internacionalización de textos nuevos (Producción/Historial) + strings.xml.
+6. Tests unitarios básicos y de integración: archivado/historial/recordatorios.

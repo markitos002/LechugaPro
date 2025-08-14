@@ -40,6 +40,7 @@ class ProduccionDetalleFragment : Fragment() {
     private lateinit var btnIniciar: Button
     private lateinit var btnTerminar: Button
     private lateinit var btnEditar: Button
+    private lateinit var btnArchivar: Button
 
     private val df = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
@@ -57,7 +58,8 @@ class ProduccionDetalleFragment : Fragment() {
         notas = view.findViewById(R.id.detalle_notas)
         btnIniciar = view.findViewById(R.id.button_iniciar)
         btnTerminar = view.findViewById(R.id.button_terminar)
-        btnEditar = view.findViewById(R.id.button_editar)
+    btnEditar = view.findViewById(R.id.button_editar)
+    btnArchivar = view.findViewById(R.id.button_archivar)
 
         viewModel.ciclo.observe(viewLifecycleOwner) { c ->
             c?.let { bind(it) }
@@ -68,6 +70,10 @@ class ProduccionDetalleFragment : Fragment() {
         btnEditar.setOnClickListener {
             val action = ProduccionDetalleFragmentDirections.actionProduccionDetalleFragmentToProduccionEditFragment(args.cicloId)
             findNavController().navigate(action)
+        }
+        btnArchivar.setOnClickListener {
+            viewModel.archivar()
+            findNavController().popBackStack()
         }
     }
 
@@ -80,8 +86,9 @@ class ProduccionDetalleFragment : Fragment() {
         val estimada = c.fechaEstimadaCosecha?.let { df.format(Date(it)) } ?: "?"
         fechas.text = "Siembra: $siembra • Estimada: $estimada"
         notas.text = c.notas?.takeIf { it.isNotBlank() } ?: "Sin notas"
-        btnIniciar.isVisible = c.estado == "Planificado"
-        btnTerminar.isVisible = c.estado == "Activo"
+    btnIniciar.isVisible = c.estado == "Planificado"
+    btnTerminar.isVisible = c.estado == "Activo"
+    btnArchivar.isVisible = c.estado == "Terminado"
     }
 }
 
@@ -93,6 +100,11 @@ class ProduccionDetalleViewModel(private val repository: CicloProduccionReposito
         if (actual.estado == nuevo) return
         val actualizado = actual.copy(estado = nuevo)
         viewModelScope.launch { repository.update(actualizado) }
+    }
+
+    fun archivar() {
+        val actual = ciclo.value ?: return
+        viewModelScope.launch { repository.archivar(actual.id) }
     }
 
     class Factory(private val repo: CicloProduccionRepository, private val id: Long) : ViewModelProvider.Factory {

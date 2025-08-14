@@ -30,6 +30,9 @@ interface CicloProduccionDao {
     @Query("UPDATE ciclos_produccion SET estado = 'Archivado' WHERE id = :id")
     suspend fun archivar(id: Long)
 
+    @Query("UPDATE ciclos_produccion SET estado = :estado WHERE id = :id")
+    suspend fun updateEstado(id: Long, estado: String)
+
     @Query("DELETE FROM ciclos_produccion WHERE id = :id")
     suspend fun deleteById(id: Long)
 }

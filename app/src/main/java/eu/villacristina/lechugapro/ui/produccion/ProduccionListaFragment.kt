@@ -45,17 +45,23 @@ class ProduccionListaFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.fabHistory.setOnClickListener {
-            val action = ProduccionListaFragmentDirections.actionProduccionListaFragmentToProduccionHistorialFragment()
-            findNavController().navigate(action)
+            findNavController().navigate(eu.villacristina.lechugapro.R.id.produccionHistorialFragment)
         }
     }
 
     private fun setupRecycler() {
-        adapter = CicloAdapter { ciclo ->
+        adapter = CicloAdapter(
+            onClick = { ciclo ->
             // Navegar a edición de ciclo existente
                 val action = ProduccionListaFragmentDirections.actionProduccionListaFragmentToProduccionDetalleFragment(ciclo.id)
             findNavController().navigate(action)
-        }
+            },
+            onLongPress = { ciclo ->
+                eu.villacristina.lechugapro.notifications.ReminderScheduler.cancelCycle(requireContext(), ciclo.id)
+                viewModel.archivar(ciclo.id)
+                true
+            }
+        )
         binding.recyclerCiclos.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerCiclos.adapter = adapter
     }
@@ -76,6 +82,10 @@ class ProduccionListaFragment : Fragment() {
 class ProduccionListaViewModel(private val repository: CicloProduccionRepository) : ViewModel() {
     val ciclos = repository.ciclosActivos
 
+    fun archivar(id: Long) {
+        viewModelScope.launch { repository.archivar(id) }
+    }
+
     @Suppress("UNCHECKED_CAST")
     class Factory(private val repository: CicloProduccionRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -87,7 +97,10 @@ class ProduccionListaViewModel(private val repository: CicloProduccionRepository
     }
 }
 
-private class CicloAdapter(private val onClick: (CicloProduccion) -> Unit) : androidx.recyclerview.widget.RecyclerView.Adapter<CicloVH>() {
+private class CicloAdapter(
+    private val onClick: (CicloProduccion) -> Unit,
+    private val onLongPress: (CicloProduccion) -> Boolean
+) : androidx.recyclerview.widget.RecyclerView.Adapter<CicloVH>() {
     private val items = mutableListOf<CicloProduccion>()
     fun submit(nuevos: List<CicloProduccion>) {
         items.clear(); items.addAll(nuevos); notifyDataSetChanged()
@@ -100,7 +113,8 @@ private class CicloAdapter(private val onClick: (CicloProduccion) -> Unit) : and
     override fun onBindViewHolder(holder: CicloVH, position: Int) {
         val item = items[position]
         holder.bind(item)
-        holder.itemView.setOnClickListener { onClick(item) }
+    holder.itemView.setOnClickListener { onClick(item) }
+    holder.itemView.setOnLongClickListener { onLongPress(item) }
     }
 }
 

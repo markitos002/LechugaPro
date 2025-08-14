@@ -42,6 +42,8 @@ public final class CicloProduccionDao_Impl implements CicloProduccionDao {
 
   private final SharedSQLiteStatement __preparedStmtOfArchivar;
 
+  private final SharedSQLiteStatement __preparedStmtOfUpdateEstado;
+
   private final SharedSQLiteStatement __preparedStmtOfDeleteById;
 
   public CicloProduccionDao_Impl(@NonNull final RoomDatabase __db) {
@@ -233,6 +235,14 @@ public final class CicloProduccionDao_Impl implements CicloProduccionDao {
         return _query;
       }
     };
+    this.__preparedStmtOfUpdateEstado = new SharedSQLiteStatement(__db) {
+      @Override
+      @NonNull
+      public String createQuery() {
+        final String _query = "UPDATE ciclos_produccion SET estado = ? WHERE id = ?";
+        return _query;
+      }
+    };
     this.__preparedStmtOfDeleteById = new SharedSQLiteStatement(__db) {
       @Override
       @NonNull
@@ -299,6 +309,38 @@ public final class CicloProduccionDao_Impl implements CicloProduccionDao {
           }
         } finally {
           __preparedStmtOfArchivar.release(_stmt);
+        }
+      }
+    }, $completion);
+  }
+
+  @Override
+  public Object updateEstado(final long id, final String estado,
+      final Continuation<? super Unit> $completion) {
+    return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
+      @Override
+      @NonNull
+      public Unit call() throws Exception {
+        final SupportSQLiteStatement _stmt = __preparedStmtOfUpdateEstado.acquire();
+        int _argIndex = 1;
+        if (estado == null) {
+          _stmt.bindNull(_argIndex);
+        } else {
+          _stmt.bindString(_argIndex, estado);
+        }
+        _argIndex = 2;
+        _stmt.bindLong(_argIndex, id);
+        try {
+          __db.beginTransaction();
+          try {
+            _stmt.executeUpdateDelete();
+            __db.setTransactionSuccessful();
+            return Unit.INSTANCE;
+          } finally {
+            __db.endTransaction();
+          }
+        } finally {
+          __preparedStmtOfUpdateEstado.release(_stmt);
         }
       }
     }, $completion);
