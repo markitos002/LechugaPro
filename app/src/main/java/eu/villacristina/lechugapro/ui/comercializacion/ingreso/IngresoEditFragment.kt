@@ -54,10 +54,18 @@ class IngresoEditFragment : Fragment() {
 
     // Opciones para estado de pago
     val opcionesEstado = listOf("Pagado", "En deuda")
-    val adapterEstado = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, opcionesEstado)
-    binding.autoCompleteEstadoPago.setAdapter(adapterEstado)
-    // Valor por defecto
-    binding.autoCompleteEstadoPago.setText("Pagado", false)
+        val adapterEstado = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, opcionesEstado)
+        binding.autoCompleteEstadoPago.apply {
+            setAdapter(adapterEstado)
+            // Evitar teclado y abrir menú con tap
+            isFocusable = false
+            isClickable = true
+            keyListener = null
+            setOnClickListener { showDropDown() }
+            setOnFocusChangeListener { _, hasFocus -> if (hasFocus) showDropDown() }
+            // Valor por defecto
+            setText("Pagado", false)
+        }
 
         // Deshabilitar edición manual y abrir date picker al tocar el campo
         binding.editTextFechaIngreso.isFocusable = false
@@ -85,8 +93,8 @@ class IngresoEditFragment : Fragment() {
                         binding.editTextFechaIngreso.setText(dateFormatter.format(Date(it.fecha)))
                         binding.editTextConceptoIngreso.setText(it.concepto)
                         binding.editTextImporteIngreso.setText(it.importe.toString())
-            val estado = if (opcionesEstado.contains(it.notas)) it.notas else "Pagado"
-            binding.autoCompleteEstadoPago.setText(estado, false)
+                        val estado = if (opcionesEstado.contains(it.estadoPago)) it.estadoPago else "Pagado"
+                        binding.autoCompleteEstadoPago.setText(estado, false)
                         requireActivity().title = "Editar Ingreso"
                     }
                 }
