@@ -4,11 +4,13 @@ package eu.villacristina.lechugapro.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import eu.villacristina.lechugapro.R;
 import java.lang.NullPointerException;
@@ -18,6 +20,12 @@ import java.lang.String;
 public final class ItemCicloProduccionBinding implements ViewBinding {
   @NonNull
   private final MaterialCardView rootView;
+
+  @NonNull
+  public final LinearLayout actionsRow;
+
+  @NonNull
+  public final MaterialButton btnArchivar;
 
   @NonNull
   public final TextView textEstado;
@@ -32,9 +40,12 @@ public final class ItemCicloProduccionBinding implements ViewBinding {
   public final TextView textVariedad;
 
   private ItemCicloProduccionBinding(@NonNull MaterialCardView rootView,
+      @NonNull LinearLayout actionsRow, @NonNull MaterialButton btnArchivar,
       @NonNull TextView textEstado, @NonNull TextView textFechas, @NonNull TextView textNombre,
       @NonNull TextView textVariedad) {
     this.rootView = rootView;
+    this.actionsRow = actionsRow;
+    this.btnArchivar = btnArchivar;
     this.textEstado = textEstado;
     this.textFechas = textFechas;
     this.textNombre = textNombre;
@@ -68,6 +79,18 @@ public final class ItemCicloProduccionBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.actions_row;
+      LinearLayout actionsRow = ViewBindings.findChildViewById(rootView, id);
+      if (actionsRow == null) {
+        break missingId;
+      }
+
+      id = R.id.btn_archivar;
+      MaterialButton btnArchivar = ViewBindings.findChildViewById(rootView, id);
+      if (btnArchivar == null) {
+        break missingId;
+      }
+
       id = R.id.text_estado;
       TextView textEstado = ViewBindings.findChildViewById(rootView, id);
       if (textEstado == null) {
@@ -92,8 +115,8 @@ public final class ItemCicloProduccionBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemCicloProduccionBinding((MaterialCardView) rootView, textEstado, textFechas,
-          textNombre, textVariedad);
+      return new ItemCicloProduccionBinding((MaterialCardView) rootView, actionsRow, btnArchivar,
+          textEstado, textFechas, textNombre, textVariedad);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

@@ -37,8 +37,14 @@ class ProduccionHistorialFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = HistAdapter(
-            onRestore = { c -> viewModel.restaurar(c.id) },
-            onDelete = { c -> viewModel.eliminar(c.id) }
+            onRestore = { c ->
+                viewModel.restaurar(c.id)
+                android.widget.Toast.makeText(requireContext(), "Ciclo restaurado", android.widget.Toast.LENGTH_SHORT).show()
+            },
+            onDelete = { c ->
+                viewModel.eliminar(c.id)
+                android.widget.Toast.makeText(requireContext(), "Ciclo eliminado", android.widget.Toast.LENGTH_SHORT).show()
+            }
         )
         recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.adapter = adapter

@@ -3254,6 +3254,7 @@ int id action_produccionListaFragment_to_produccionEditFragment 0x7f09004d
 int id action_produccionListaFragment_to_produccionHistorialFragment 0x7f090260
 int id action_text 0x7f09004e
 int id actions 0x7f09004f
+int id actions_row 0x7f09026d
 int id activity_chooser_view_content 0x7f090050
 int id add 0x7f090051
 int id alertTitle 0x7f090052
@@ -3287,6 +3288,7 @@ int id bounce 0x7f09006d
 int id bounceBoth 0x7f09006e
 int id bounceEnd 0x7f09006f
 int id bounceStart 0x7f090070
+int id btn_archivar 0x7f09026e
 int id btn_clientes 0x7f090071
 int id btn_delete 0x7f090261
 int id btn_ingresos 0x7f090072

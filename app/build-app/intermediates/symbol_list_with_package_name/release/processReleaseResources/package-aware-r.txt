@@ -3255,6 +3255,7 @@ id action_produccionListaFragment_to_produccionEditFragment
 id action_produccionListaFragment_to_produccionHistorialFragment
 id action_text
 id actions
+id actions_row
 id activity_chooser_view_content
 id add
 id alertTitle
@@ -3288,6 +3289,7 @@ id bounce
 id bounceBoth
 id bounceEnd
 id bounceStart
+id btn_archivar
 id btn_clientes
 id btn_delete
 id btn_ingresos

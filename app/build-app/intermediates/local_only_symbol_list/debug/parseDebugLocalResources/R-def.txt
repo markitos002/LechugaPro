@@ -28,7 +28,9 @@ id action_produccionDetalleFragment_to_produccionEditFragment
 id action_produccionListaFragment_to_produccionDetalleFragment
 id action_produccionListaFragment_to_produccionEditFragment
 id action_produccionListaFragment_to_produccionHistorialFragment
+id actions_row
 id bottom_navigation
+id btn_archivar
 id btn_clientes
 id btn_delete
 id btn_ingresos

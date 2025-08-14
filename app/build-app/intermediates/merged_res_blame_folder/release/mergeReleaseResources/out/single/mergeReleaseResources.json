@@ -28,12 +28,16 @@
         "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-60:\\layout\\item_cliente.xml"
     },
     {
-        "merged": "eu.villacristina.lechugapro.app-release-59:/layout_fragment_produccion_detalle.xml.flat",
-        "source": "eu.villacristina.lechugapro.app-main-60:/layout/fragment_produccion_detalle.xml"
+        "merged": "eu.villacristina.lechugapro.app-release-59:/layout_fragment_produccion_edit.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-60:/layout/fragment_produccion_edit.xml"
     },
     {
         "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-release-59:\\xml_backup_rules.xml.flat",
         "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-60:\\xml\\backup_rules.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-release-59:/layout_item_cliente.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-60:/layout/item_cliente.xml"
     },
     {
         "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-release-59:\\mipmap-hdpi_ic_launcher.webp.flat",

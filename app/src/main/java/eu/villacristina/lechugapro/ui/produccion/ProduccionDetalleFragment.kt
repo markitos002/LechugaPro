@@ -72,7 +72,10 @@ class ProduccionDetalleFragment : Fragment() {
             findNavController().navigate(action)
         }
         btnArchivar.setOnClickListener {
+            val id = args.cicloId
+            eu.villacristina.lechugapro.notifications.ReminderScheduler.cancelCycle(requireContext(), id)
             viewModel.archivar()
+            android.widget.Toast.makeText(requireContext(), "Ciclo archivado", android.widget.Toast.LENGTH_SHORT).show()
             findNavController().popBackStack()
         }
     }

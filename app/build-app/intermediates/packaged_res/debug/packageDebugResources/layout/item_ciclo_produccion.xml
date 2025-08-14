@@ -40,5 +40,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Siembra: 12/08/2025 • Estimada cosecha: 12/10/2025" />
+
+        <LinearLayout
+            android:id="@+id/actions_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="8dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_archivar"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Archivar"
+                android:visibility="gone" />
+        </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

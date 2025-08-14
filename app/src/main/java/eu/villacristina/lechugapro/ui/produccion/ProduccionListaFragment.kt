@@ -60,6 +60,11 @@ class ProduccionListaFragment : Fragment() {
                 eu.villacristina.lechugapro.notifications.ReminderScheduler.cancelCycle(requireContext(), ciclo.id)
                 viewModel.archivar(ciclo.id)
                 true
+            },
+            onArchive = { ciclo ->
+                eu.villacristina.lechugapro.notifications.ReminderScheduler.cancelCycle(requireContext(), ciclo.id)
+                viewModel.archivar(ciclo.id)
+                android.widget.Toast.makeText(requireContext(), "Ciclo archivado", android.widget.Toast.LENGTH_SHORT).show()
             }
         )
         binding.recyclerCiclos.layoutManager = LinearLayoutManager(requireContext())
@@ -99,7 +104,8 @@ class ProduccionListaViewModel(private val repository: CicloProduccionRepository
 
 private class CicloAdapter(
     private val onClick: (CicloProduccion) -> Unit,
-    private val onLongPress: (CicloProduccion) -> Boolean
+    private val onLongPress: (CicloProduccion) -> Boolean,
+    private val onArchive: (CicloProduccion) -> Unit
 ) : androidx.recyclerview.widget.RecyclerView.Adapter<CicloVH>() {
     private val items = mutableListOf<CicloProduccion>()
     fun submit(nuevos: List<CicloProduccion>) {
@@ -115,6 +121,8 @@ private class CicloAdapter(
         holder.bind(item)
     holder.itemView.setOnClickListener { onClick(item) }
     holder.itemView.setOnLongClickListener { onLongPress(item) }
+    val btnArch = holder.itemView.findViewById<com.google.android.material.button.MaterialButton>(eu.villacristina.lechugapro.R.id.btn_archivar)
+    btnArch?.setOnClickListener { onArchive(item) }
     }
 }
 
@@ -123,6 +131,7 @@ private class CicloVH(view: View) : androidx.recyclerview.widget.RecyclerView.Vi
     private val variedad = view.findViewById<android.widget.TextView>(eu.villacristina.lechugapro.R.id.text_variedad)
     private val estado = view.findViewById<android.widget.TextView>(eu.villacristina.lechugapro.R.id.text_estado)
     private val fechas = view.findViewById<android.widget.TextView>(eu.villacristina.lechugapro.R.id.text_fechas)
+    private val btnArchivar = view.findViewById<com.google.android.material.button.MaterialButton>(eu.villacristina.lechugapro.R.id.btn_archivar)
     private val df = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     fun bind(c: CicloProduccion) {
     nombre.text = c.numeroCiclo?.toString() ?: "(Sin número)"
@@ -131,5 +140,8 @@ private class CicloVH(view: View) : androidx.recyclerview.widget.RecyclerView.Vi
         val siembra = c.fechaSiembra?.let { df.format(Date(it)) } ?: "?"
         val estimada = c.fechaEstimadaCosecha?.let { df.format(Date(it)) } ?: "?"
         fechas.text = "Siembra: $siembra • Estimada cosecha: $estimada"
+        // Mostrar botón Archivar solo cuando Terminado
+        val showArchive = c.estado == "Terminado"
+        btnArchivar?.visibility = if (showArchive) View.VISIBLE else View.GONE
     }
 }
