@@ -108,7 +108,7 @@ public final class IngresoDao_Impl implements IngresoDao {
   }
 
   @Override
-  public Object insert(final Ingreso ingreso, final Continuation<? super Unit> arg1) {
+  public Object insert(final Ingreso ingreso, final Continuation<? super Unit> $completion) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -122,11 +122,11 @@ public final class IngresoDao_Impl implements IngresoDao {
           __db.endTransaction();
         }
       }
-    }, arg1);
+    }, $completion);
   }
 
   @Override
-  public Object delete(final Ingreso ingreso, final Continuation<? super Unit> arg1) {
+  public Object delete(final Ingreso ingreso, final Continuation<? super Unit> $completion) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -140,11 +140,11 @@ public final class IngresoDao_Impl implements IngresoDao {
           __db.endTransaction();
         }
       }
-    }, arg1);
+    }, $completion);
   }
 
   @Override
-  public Object update(final Ingreso ingreso, final Continuation<? super Unit> arg1) {
+  public Object update(final Ingreso ingreso, final Continuation<? super Unit> $completion) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -158,7 +158,7 @@ public final class IngresoDao_Impl implements IngresoDao {
           __db.endTransaction();
         }
       }
-    }, arg1);
+    }, $completion);
   }
 
   @Override
