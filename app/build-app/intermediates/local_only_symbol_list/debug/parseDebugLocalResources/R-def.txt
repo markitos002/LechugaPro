@@ -3,6 +3,7 @@ local
 array estados_produccion
 array variedades_lechuga
 color black
+color launcher_bg
 color purple_200
 color purple_500
 color purple_700
@@ -28,7 +29,6 @@ id action_produccionListaFragment_to_produccionDetalleFragment
 id action_produccionListaFragment_to_produccionEditFragment
 id bottom_navigation
 id btn_clientes
-id btn_empezar
 id btn_ingresos
 id btn_produccion
 id buttonGuardarIngreso

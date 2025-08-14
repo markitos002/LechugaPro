@@ -25,9 +25,6 @@ public final class FragmentInicioBinding implements ViewBinding {
   public final MaterialButton btnClientes;
 
   @NonNull
-  public final MaterialButton btnEmpezar;
-
-  @NonNull
   public final MaterialButton btnIngresos;
 
   @NonNull
@@ -43,12 +40,10 @@ public final class FragmentInicioBinding implements ViewBinding {
   public final TextView title;
 
   private FragmentInicioBinding(@NonNull ScrollView rootView, @NonNull MaterialButton btnClientes,
-      @NonNull MaterialButton btnEmpezar, @NonNull MaterialButton btnIngresos,
-      @NonNull MaterialButton btnProduccion, @NonNull ImageView logo, @NonNull TextView subtitle,
-      @NonNull TextView title) {
+      @NonNull MaterialButton btnIngresos, @NonNull MaterialButton btnProduccion,
+      @NonNull ImageView logo, @NonNull TextView subtitle, @NonNull TextView title) {
     this.rootView = rootView;
     this.btnClientes = btnClientes;
-    this.btnEmpezar = btnEmpezar;
     this.btnIngresos = btnIngresos;
     this.btnProduccion = btnProduccion;
     this.logo = logo;
@@ -89,12 +84,6 @@ public final class FragmentInicioBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.btn_empezar;
-      MaterialButton btnEmpezar = ViewBindings.findChildViewById(rootView, id);
-      if (btnEmpezar == null) {
-        break missingId;
-      }
-
       id = R.id.btn_ingresos;
       MaterialButton btnIngresos = ViewBindings.findChildViewById(rootView, id);
       if (btnIngresos == null) {
@@ -125,7 +114,7 @@ public final class FragmentInicioBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentInicioBinding((ScrollView) rootView, btnClientes, btnEmpezar, btnIngresos,
+      return new FragmentInicioBinding((ScrollView) rootView, btnClientes, btnIngresos,
           btnProduccion, logo, subtitle, title);
     }
     String missingId = rootView.getResources().getResourceName(id);

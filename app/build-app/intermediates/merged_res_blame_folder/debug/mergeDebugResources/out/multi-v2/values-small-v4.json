@@ -4,7 +4,7 @@
             "outputFile": "eu.villacristina.lechugapro.app-mergeDebugResources-57:/values-small-v4/values-small-v4.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\marco\\.gradle\\caches\\8.13\\transforms\\1b351b6aea064e7f6249734a860c6fff\\transformed\\material-1.12.0\\res\\values-small-v4\\values-small-v4.xml",
+                    "source": "C:\\Users\\marco\\.jdks\\corretto-17.0.12\\caches\\8.13\\transforms\\1b351b6aea064e7f6249734a860c6fff\\transformed\\material-1.12.0\\res\\values-small-v4\\values-small-v4.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",
