@@ -105,6 +105,30 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="Historial de ventas" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:id="@+id/detalle_total_ingresos"
+                    style="?attr/textAppearanceBodyLarge"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Total vendido: $ 0" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_compartir_ingresos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Compartir"
+                    app:icon="@android:drawable/ic_menu_share"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp" />
+            </LinearLayout>
                 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_ingresos"

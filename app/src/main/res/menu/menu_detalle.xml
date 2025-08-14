@@ -11,4 +11,9 @@
         android:title="Borrar"
         android:icon="@android:drawable/ic_menu_delete"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_export_csv"
+        android:title="Exportar CSV"
+        android:icon="@android:drawable/ic_menu_share"
+        app:showAsAction="ifRoom" />
 </menu>
