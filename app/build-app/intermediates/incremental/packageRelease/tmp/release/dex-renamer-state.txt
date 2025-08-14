@@ -1,4 +1,4 @@
-#Thu Aug 14 15:47:36 COT 2025
+#Thu Aug 14 16:03:43 COT 2025
 base.1=D\:\\LechugaPro\\app\\build-app\\intermediates\\dex\\release\\mergeDexRelease\\classes2.dex
 path.1=classes2.dex
 base.0=D\:\\LechugaPro\\app\\build-app\\intermediates\\dex\\release\\mergeDexRelease\\classes.dex

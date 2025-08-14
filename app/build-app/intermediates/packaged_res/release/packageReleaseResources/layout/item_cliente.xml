@@ -12,14 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:minHeight="72dp">
 
         <TextView
             android:id="@+id/item_cliente_nombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceTitleLarge"
             android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="?attr/colorOnSurface"
             tools:text="Nombre Completo del Cliente" />
 
         <TextView
@@ -27,7 +29,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:textSize="16sp"
+            android:textColor="?attr/colorOnSurface"
             tools:text="611 22 33 44" />
 
     </LinearLayout>
