@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import eu.villacristina.lechugapro.data.Ingreso
 import eu.villacristina.lechugapro.databinding.ItemIngresoBinding
-import java.text.NumberFormat
+import eu.villacristina.lechugapro.util.CurrencyFormatter
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -35,9 +35,8 @@ class IngresoListaAdapter(
             binding.itemIngresoConcepto.text = ingreso.concepto
             binding.itemIngresoFecha.text = dateFormatter.format(Date(ingreso.fecha))
             
-            // Formatear el importe como moneda local (Euro en este caso)
-            val format = NumberFormat.getCurrencyInstance(Locale.GERMANY) // Usamos Locale.GERMANY para el formato €,##
-            binding.itemIngresoImporte.text = format.format(ingreso.importe)
+            // Formatear el importe con símbolo peso y miles con punto
+            binding.itemIngresoImporte.text = CurrencyFormatter.formatPeso(ingreso.importe)
         }
     }
 
