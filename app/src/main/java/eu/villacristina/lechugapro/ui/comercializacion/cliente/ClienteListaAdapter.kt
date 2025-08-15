@@ -38,13 +38,12 @@ class ClienteListaAdapter(private val onItemClicked: (Cliente) -> Unit) :
             binding.itemClienteNombre.text = cliente.nombreCompleto
             binding.itemClienteTelefono.text = cliente.telefono ?: "Sin teléfono"
 
-            // Resaltar si el cliente tiene deuda
-            val bgColor = if (hasDebt) {
-                MaterialColors.getColor(binding.root, com.google.android.material.R.attr.colorErrorContainer)
-            } else {
-                MaterialColors.getColor(binding.root, com.google.android.material.R.attr.colorSurface)
-            }
-            binding.root.setCardBackgroundColor(bgColor)
+            // Resaltar si el cliente tiene deuda con un borde rojo (colorError)
+            val ctx = binding.root.context
+            val stroke = if (hasDebt) (4 * ctx.resources.displayMetrics.density).toInt() else 0
+            binding.root.strokeWidth = stroke
+            val strokeColor = if (hasDebt) MaterialColors.getColor(binding.root, com.google.android.material.R.attr.colorError) else 0
+            binding.root.setStrokeColor(strokeColor)
         }
     }
 
