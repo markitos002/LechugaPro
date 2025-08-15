@@ -6,7 +6,7 @@ plugins {
 }
 
 // Workaround: move build outputs to a different folder to avoid Windows file lock on app/build
-buildDir = file("build-app2")
+buildDir = file("build-app3")
 
 android {
     namespace = "eu.villacristina.lechugapro"

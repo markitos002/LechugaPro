@@ -1,6 +1,8 @@
+
+package eu.villacristina.lechugapro.ui.comercializacion.balance
+
 import eu.villacristina.lechugapro.ui.comercializacion.balance.BalancePagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
-package eu.villacristina.lechugapro.ui.comercializacion.balance
 
 import android.os.Bundle
 import android.view.LayoutInflater

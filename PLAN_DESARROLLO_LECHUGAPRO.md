@@ -74,7 +74,12 @@
     *   Encabezado "Ingreso Total: $ XXX.XXX" sumando todos los ingresos.
 
 ## Fase 3: Módulo de Comercialización (Gastos y Ganancias)
-*(Tareas futuras sin cambios)*
+*   [x] **Balance**: TabLayout + ViewPager2 con 3 pestañas (Ingresos, Gastos, Ganancia)
+*   [x] **Gastos**: Tabla editable global (RecyclerView) con guardado automático de importe/fecha
+*   [x] **Gastos - UX**: DatePicker en campo fecha (bloqueando entrada manual)
+*   [x] **Datos iniciales**: Semilla automática de tipos fijos (Preparación terreno, Potasio, Fungicida, Cal, Abono) si la tabla está vacía
+*   [ ] **Gastos - Mejora**: Filtrar los gastos por ciclo activo (en lugar de globales)
+*   [ ] **Gastos - Mejora**: Añadir botón para agregar nuevos tipos a la tabla
 
 ## Fase 4: Sincronización de Datos (Local a Servidor) - Funcionalidad Avanzada
 *(Tareas futuras sin cambios)*
@@ -126,3 +131,4 @@
 4. Internacionalización de textos (Clientes/Incomes/Export) y strings.xml; revisar accesibilidad/contrastes.
 5. Tests unitarios y de integración: ingresos (crud, filtros, migración `estado_pago`), producción (archivado y recordatorios).
 6. CI básico (build + tests) con GitHub Actions y linter (ktlint o detekt).
+ 7. Comercialización - Gastos: filtro por ciclo activo y botón para agregar nuevos tipos (pendientes)

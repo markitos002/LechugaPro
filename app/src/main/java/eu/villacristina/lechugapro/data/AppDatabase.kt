@@ -166,8 +166,42 @@ val MIGRATION_10_11 = object : Migration(10, 11) {
 
 @Database(entities = [CicloProduccion::class, Cliente::class, Ingreso::class, Gasto::class], version = 11, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
+    companion object {
+        @Volatile
+        private var INSTANCE: AppDatabase? = null
+
+        fun getDatabase(context: Context): AppDatabase {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java,
+                    "lechuga_pro_database"
+                )
+                    .addMigrations(MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10, MIGRATION_10_11)
+                    .fallbackToDestructiveMigration()
+                    .build()
+                INSTANCE = instance
+                instance
+            }
+        }
+    }
     abstract fun cicloProduccionDao(): CicloProduccionDao
     abstract fun clienteDao(): ClienteDao
     abstract fun ingresoDao(): IngresoDao
     abstract fun gastoDao(): GastoDao
+
+        suspend fun seedGastosTiposIfEmpty() {
+            // Tipos fijos iniciales
+            val tipos = listOf("Preparación terreno", "Potasio", "Fungicida", "Cal", "Abono")
+            // Si no hay registros, crear uno por tipo con importe 0 y fecha hoy, id_ciclo = 0 (global)
+            if (gastoDao().getTodosGastos().isEmpty()) {
+                val hoy = System.currentTimeMillis()
+                tipos.forEach { t ->
+                    try {
+                        gastoDao().insertGasto(Gasto(idCiclo = 0, tipo = t, importe = 0.0, fecha = hoy))
+                    } catch (_: Exception) { }
+                }
+            }
+        }
+}
 
