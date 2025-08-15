@@ -110,6 +110,7 @@ id recycler_historial
 id recyclerview_clientes
 id recyclerview_ingresos
 id subtitle
+id tab_layout_balance
 id textFieldLayoutConceptoIngreso
 id textFieldLayoutEstadoPago
 id textFieldLayoutFechaIngreso
@@ -124,7 +125,9 @@ id text_total_ingresos
 id text_variedad
 id title
 id toolbar
+id viewpager_balance
 layout activity_main
+layout fragment_balance
 layout fragment_cliente_detalle
 layout fragment_cliente_edit
 layout fragment_cliente_lista

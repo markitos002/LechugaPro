@@ -16,6 +16,10 @@
         "source": "eu.villacristina.lechugapro.app-main-61:/layout/fragment_produccion_detalle.xml"
     },
     {
+        "merged": "eu.villacristina.lechugapro.app-mergeDebugResources-58:/layout/fragment_balance.xml",
+        "source": "eu.villacristina.lechugapro.app-main-61:/layout/fragment_balance.xml"
+    },
+    {
         "merged": "eu.villacristina.lechugapro.app-mergeDebugResources-58:/layout/fragment_inicio.xml",
         "source": "eu.villacristina.lechugapro.app-main-61:/layout/fragment_inicio.xml"
     },

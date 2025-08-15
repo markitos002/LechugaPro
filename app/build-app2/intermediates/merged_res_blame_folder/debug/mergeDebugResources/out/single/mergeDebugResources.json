@@ -12,6 +12,10 @@
         "source": "eu.villacristina.lechugapro.app-main-61:/mipmap-hdpi/ic_launcher.webp"
     },
     {
+        "merged": "eu.villacristina.lechugapro.app-debug-59:/layout_fragment_balance.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-61:/layout/fragment_balance.xml"
+    },
+    {
         "merged": "eu.villacristina.lechugapro.app-debug-59:/drawable_background_estado_planificado.xml.flat",
         "source": "eu.villacristina.lechugapro.app-main-61:/drawable/background_estado_planificado.xml"
     },
@@ -86,10 +90,6 @@
     {
         "merged": "eu.villacristina.lechugapro.app-debug-59:/layout_fragment_produccion_lista.xml.flat",
         "source": "eu.villacristina.lechugapro.app-main-61:/layout/fragment_produccion_lista.xml"
-    },
-    {
-        "merged": "eu.villacristina.lechugapro.app-debug-59:/navigation_nav_graph.xml.flat",
-        "source": "eu.villacristina.lechugapro.app-main-61:/navigation/nav_graph.xml"
     },
     {
         "merged": "eu.villacristina.lechugapro.app-debug-59:/mipmap-mdpi_ic_launcher_round.webp.flat",

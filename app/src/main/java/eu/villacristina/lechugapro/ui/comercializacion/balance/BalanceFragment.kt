@@ -1,3 +1,5 @@
+import eu.villacristina.lechugapro.ui.comercializacion.balance.BalancePagerAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 package eu.villacristina.lechugapro.ui.comercializacion.balance
 
 import android.os.Bundle
@@ -16,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import eu.villacristina.lechugapro.data.AppDatabase
 import eu.villacristina.lechugapro.data.IngresoRepository
-import eu.villacristina.lechugapro.databinding.FragmentIngresoListaBinding
+import eu.villacristina.lechugapro.databinding.FragmentBalanceBinding
 import eu.villacristina.lechugapro.ui.comercializacion.ingreso.IngresoListaAdapter
 import eu.villacristina.lechugapro.ui.comercializacion.ingreso.IngresoListaViewModel
 import eu.villacristina.lechugapro.ui.comercializacion.ingreso.IngresoListaViewModelFactory
@@ -24,7 +26,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class BalanceFragment : Fragment() {
-	private var _binding: FragmentIngresoListaBinding? = null
+	private var _binding: FragmentBalanceBinding? = null
 	private val binding get() = _binding!!
 	private val viewModel: IngresoListaViewModel by viewModels {
 		val database = AppDatabase.getDatabase(requireContext())
@@ -32,48 +34,21 @@ class BalanceFragment : Fragment() {
 	}
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-		_binding = FragmentIngresoListaBinding.inflate(inflater, container, false)
+		_binding = FragmentBalanceBinding.inflate(inflater, container, false)
 		return binding.root
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		val adapter = IngresoListaAdapter { ingreso ->
-			val action = BalanceFragmentDirections.actionBalanceFragmentToIngresoEditFragment(
-				ingresoId = ingreso.id,
-				clienteId = ingreso.idCliente
-			)
-			findNavController().navigate(action)
-		}
-		binding.recyclerviewIngresos.layoutManager = LinearLayoutManager(requireContext())
-		binding.recyclerviewIngresos.adapter = adapter
+		// Configurar TabLayout y ViewPager2 para las tres pestañas: Ingresos, Gastos, Ganancia
+		val tabLayout = binding.tabLayoutBalance
+		val viewPager = binding.viewpagerBalance
 
-		val swipeCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
-			override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder) = false
-			override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-				val position = viewHolder.adapterPosition.takeIf { it != RecyclerView.NO_POSITION } ?: return
-				val ingreso = adapter.currentList.getOrNull(position)
-				if (ingreso != null) {
-					viewModel.deleteIngreso(ingreso)
-					Snackbar.make(binding.root, "Ingreso borrado", Snackbar.LENGTH_LONG)
-						.setAction("DESHACER") { viewModel.reInsertIngreso(ingreso) }
-						.show()
-				}
-			}
-		}
-		ItemTouchHelper(swipeCallback).attachToRecyclerView(binding.recyclerviewIngresos)
-
-		viewLifecycleOwner.lifecycleScope.launch {
-			viewModel.todosLosIngresos.collectLatest { ingresos ->
-				binding.emptyView.isVisible = ingresos.isEmpty()
-				binding.recyclerviewIngresos.isVisible = ingresos.isNotEmpty()
-				adapter.submitList(ingresos)
-			}
-		}
-
-		binding.fabAnadirIngreso.setOnClickListener {
-			Toast.makeText(requireContext(), "Añade ingresos desde el detalle de un cliente", Toast.LENGTH_SHORT).show()
-		}
+		val tabTitles = listOf("Ingresos", "Gastos", "Ganancia")
+		viewPager.adapter = BalancePagerAdapter(requireActivity())
+		TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+			tab.text = tabTitles[position]
+		}.attach()
 	}
 
 	override fun onDestroyView() { super.onDestroyView(); _binding = null }
