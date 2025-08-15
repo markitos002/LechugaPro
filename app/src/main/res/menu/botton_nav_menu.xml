@@ -12,8 +12,8 @@
         android:title="Clientes" />
 
     <item
-        android:id="@+id/ingresoListaFragment"
+        android:id="@+id/balanceFragment"
         android:icon="@drawable/ic_ingresos"
-        android:title="Ingresos" />
+        android:title="Balance" />
 
 </menu>

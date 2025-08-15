@@ -37,7 +37,7 @@ class InicioFragment : Fragment() {
 			findNavController().navigate(R.id.clienteListaFragment)
 		}
 		view.findViewById<View>(R.id.btn_ingresos).setOnClickListener {
-			findNavController().navigate(R.id.ingresoListaFragment)
+			findNavController().navigate(R.id.balanceFragment)
 		}
 		view.findViewById<View>(R.id.btn_produccion).setOnClickListener {
 			findNavController().navigate(R.id.produccionListaFragment)

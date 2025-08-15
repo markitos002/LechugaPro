@@ -56,7 +56,22 @@
     *   [x] Navegación a editor de ingreso (Safe Args)
     *   [x] Borrado con swipe + undo de ingresos
 *   [x] **Tarea 24: Implementar `BottomNavigationView`**
-*   [ ] **Tarea 25: Mejoras UX Ingresos** (date picker moderno, validaciones extra, formato moneda)
+*   [x] **Tarea 25: Mejoras UX Ingresos**
+    *   Date picker Material y bloqueo de entrada manual en `IngresoEditFragment`.
+    *   Validaciones extra de importe (> 0) con mensajes de error.
+    *   Formato de moneda: símbolo $ con separador de miles (punto), p. ej. $ 1.000.
+    *   Utilidad `CurrencyFormatter` para formato consistente.
+*   [x] **Tarea 26: Historial por Cliente y Exportación**
+    *   Mostrar "Historial de ventas" en detalle de cliente con todos los ingresos del cliente.
+    *   Mostrar "Total vendido" por cliente (formateado con $) arriba del historial.
+    *   Exportar/Compartir CSV desde el detalle (con cabecera que incluye el nombre del cliente).
+    *   Configuración de `FileProvider` y `file_paths.xml` para compartir desde caché.
+*   [x] **Tarea 27: Estado de Pago y Deudores**
+    *   Dropdown en Ingreso (Pagado / En deuda) como lista desplegable.
+    *   Migración Room 9→10: nueva columna `estado_pago` en `ingresos` (backfill desde `notas` si coincide).
+    *   Resaltado de clientes con deuda en la lista de clientes.
+*   [x] **Tarea 28: Ingreso Total Global en Lista de Clientes**
+    *   Encabezado "Ingreso Total: $ XXX.XXX" sumando todos los ingresos.
 
 ## Fase 3: Módulo de Comercialización (Gastos y Ganancias)
 *(Tareas futuras sin cambios)*
@@ -72,9 +87,9 @@
 ## Backlog Técnico / Pendiente Detallado
 
 ### Producción
-1. Cancelar recordatorios también al archivar desde la pantalla de Detalle.
-2. Añadir acción visible “Archivar” en cada ítem de la lista (botón de acción secundaria) además del long-press.
-3. Mostrar toasts de confirmación para archivar/restaurar/eliminar en Historial y Lista.
+1. (Hecho) Cancelar recordatorios también al archivar desde la pantalla de Detalle.
+2. (Hecho) Añadir acción visible “Archivar” en cada ítem de la lista además del long-press.
+3. (Hecho) Mostrar toasts de confirmación para archivar/restaurar/eliminar en Historial y Lista.
 4. Limpiar columnas obsoletas en una migración futura (inicio/fin preparación, abono, real) o reutilizarlas si se reintroducen.
 5. Convertir adapter inline de lista de ciclos a `ProduccionListaAdapter` con DiffUtil (optimización).
 6. Internacionalizar textos nuevos (Archivar/Restaurar/Eliminar/Historial/recordatorios) y formato de fechas localizable.
@@ -83,10 +98,11 @@
 
 ### Comercialización - Ingresos
 1. (Hecho) Swipe delete con undo.
-2. Date picker Material para fecha de ingreso (sustituir input manual).
-3. Filtro rango fechas + total sumario (detalle cliente).
-4. Validar importe (mínimo >0, opcional máximo configurable) y formato regional.
-5. Tests repositorio/flujo (insertar, actualizar, borrar).
+2. (Hecho) Date picker Material para fecha de ingreso (sustituir input manual) y bloqueo de teclado.
+3. Filtro por rango de fechas + total sumario por rango (detalle cliente) y exportación filtrada.
+4. Filtro por estado de pago (Pagado / En deuda) en historial.
+5. Validar importe (mínimo >0, opcional máximo configurable) y formato regional.
+6. Tests repositorio/flujo (insertar, actualizar, borrar) y migración `estado_pago`.
 
 ### Cross-cutting
 1. Extraer formatos de fecha a util central y permitir configuración futura.
@@ -104,9 +120,9 @@
 ---
 
 ## Próximo Sprint Propuesto (actualizado)
-1. Cancelar recordatorios al archivar desde Detalle + toasts de confirmación (archivar/restaurar/eliminar).
-2. Acción “Archivar” visible en los ítems de la lista de Producción.
-3. Adapter Producción con DiffUtil.
-4. Date picker en IngresoEditFragment (MaterialDatePicker) y bloqueo de entrada manual.
-5. Internacionalización de textos nuevos (Producción/Historial) + strings.xml.
-6. Tests unitarios básicos y de integración: archivado/historial/recordatorios.
+1. Filtros en historial de ingresos: por fechas y por estado (Pagado/En deuda) + totales por filtro.
+2. Adapter Producción con DiffUtil y pequeñas optimizaciones de UI.
+3. Migración de limpieza: retirar columnas obsoletas en `ciclos_produccion` o documentar su deprecación.
+4. Internacionalización de textos (Clientes/Incomes/Export) y strings.xml; revisar accesibilidad/contrastes.
+5. Tests unitarios y de integración: ingresos (crud, filtros, migración `estado_pago`), producción (archivado y recordatorios).
+6. CI básico (build + tests) con GitHub Actions y linter (ktlint o detekt).
