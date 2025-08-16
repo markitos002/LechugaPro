@@ -47,7 +47,7 @@ class BalanceFragment : Fragment() {
 		val viewPager = binding.viewpagerBalance
 
 		val tabTitles = listOf("Ingresos", "Gastos", "Ganancia")
-		viewPager.adapter = BalancePagerAdapter(requireActivity())
+	viewPager.adapter = BalancePagerAdapter(this)
 		TabLayoutMediator(tabLayout, viewPager) { tab, position ->
 			tab.text = tabTitles[position]
 		}.attach()

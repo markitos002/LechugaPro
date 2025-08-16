@@ -6,7 +6,7 @@ plugins {
 }
 
 // Workaround: move build outputs to a different folder to avoid Windows file lock on app/build
-buildDir = file("build-app3")
+buildDir = file("build-app5")
 
 android {
     namespace = "eu.villacristina.lechugapro"
@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.viewpager2)
 
     // Lifecycle
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
