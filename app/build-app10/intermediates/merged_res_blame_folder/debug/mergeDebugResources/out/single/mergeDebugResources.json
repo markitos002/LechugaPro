@@ -1,0 +1,194 @@
+[
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_item_total_cliente.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/item_total_cliente.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/drawable_ic_clientes.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/drawable/ic_clientes.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_item_cliente.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/item_cliente.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_fragment_cliente_detalle.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/fragment_cliente_detalle.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_fragment_ingreso_lista.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/fragment_ingreso_lista.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/xml_backup_rules.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/raw_icon.svg.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/raw/icon.svg"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_fragment_cliente_lista.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/fragment_cliente_lista.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_fragment_inicio.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/fragment_inicio.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_fragment_ganancia_tab.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/fragment_ganancia_tab.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/drawable_ic_launcher_background.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/drawable_ic_ingresos.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/drawable/ic_ingresos.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_fragment_produccion_lista.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/fragment_produccion_lista.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/drawable_background_estado_planificado.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/drawable/background_estado_planificado.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_activity_main.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/activity_main.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_item_gasto_editable.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/item_gasto_editable.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/drawable_ic_produccion.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/drawable/ic_produccion.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_fragment_balance.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/fragment_balance.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/menu_bottom_nav_menu.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/menu/bottom_nav_menu.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_fragment_ingresos_tab.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/fragment_ingresos_tab.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_fragment_gastos_tab.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/fragment_gastos_tab.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/xml_file_paths.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/xml/file_paths.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_item_ciclo_produccion_hist.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/item_ciclo_produccion_hist.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/drawable_ic_add.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/drawable/ic_add.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_fragment_produccion_detalle.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/fragment_produccion_detalle.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/mipmap-hdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_fragment_produccion_historial.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/fragment_produccion_historial.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_fragment_ingreso_edit.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/fragment_ingreso_edit.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/raw_lettuce.svg.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/raw/lettuce.svg"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/xml_data_extraction_rules.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_fragment_cliente_edit.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/fragment_cliente_edit.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_item_ciclo_produccion.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/item_ciclo_produccion.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/menu_menu_detalle.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/menu/menu_detalle.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_fragment_produccion_edit.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/fragment_produccion_edit.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/menu_botton_nav_menu.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/menu/botton_nav_menu.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/layout_item_ingreso.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/item_ingreso.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-debug-60:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "eu.villacristina.lechugapro.app-main-62:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    }
+]

@@ -32,4 +32,13 @@ interface IngresoDao {
 
     @Query("SELECT * FROM ingresos ORDER BY fecha DESC")
     fun getAllIngresos(): Flow<List<Ingreso>>
+
+    @Query("SELECT IFNULL(SUM(importe), 0) FROM ingresos")
+    suspend fun sumImporteTotal(): Double
+
+    // Totales por cliente para resumen
+    @Query("SELECT c.id AS idCliente, c.nombreCompleto AS nombre, IFNULL(SUM(i.importe), 0) AS total " +
+        "FROM clientes c LEFT JOIN ingresos i ON i.id_cliente = c.id " +
+        "GROUP BY c.id, c.nombreCompleto ORDER BY total DESC")
+    suspend fun getTotalesPorCliente(): List<TotalPorCliente>
 }

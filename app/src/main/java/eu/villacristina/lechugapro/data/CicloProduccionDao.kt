@@ -35,4 +35,7 @@ interface CicloProduccionDao {
 
     @Query("DELETE FROM ciclos_produccion WHERE id = :id")
     suspend fun deleteById(id: Long)
+
+    @Query("SELECT * FROM ciclos_produccion WHERE estado != 'Archivado' OR estado IS NULL ORDER BY id DESC LIMIT 1")
+    suspend fun getUltimoActivo(): CicloProduccion?
 }

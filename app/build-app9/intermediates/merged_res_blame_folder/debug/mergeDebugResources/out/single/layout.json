@@ -1,0 +1,86 @@
+[
+    {
+        "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-59:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-62:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-59:\\layout\\fragment_cliente_lista.xml",
+        "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-62:\\layout\\fragment_cliente_lista.xml"
+    },
+    {
+        "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-59:\\layout\\fragment_cliente_detalle.xml",
+        "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-62:\\layout\\fragment_cliente_detalle.xml"
+    },
+    {
+        "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-59:\\layout\\fragment_inicio.xml",
+        "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-62:\\layout\\fragment_inicio.xml"
+    },
+    {
+        "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-59:\\layout\\item_cliente.xml",
+        "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-62:\\layout\\item_cliente.xml"
+    },
+    {
+        "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-59:\\layout\\fragment_produccion_detalle.xml",
+        "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-62:\\layout\\fragment_produccion_detalle.xml"
+    },
+    {
+        "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-59:\\layout\\fragment_produccion_lista.xml",
+        "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-62:\\layout\\fragment_produccion_lista.xml"
+    },
+    {
+        "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-59:\\layout\\fragment_balance.xml",
+        "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-62:\\layout\\fragment_balance.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-mergeDebugResources-59:/layout/item_total_cliente.xml",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/item_total_cliente.xml"
+    },
+    {
+        "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-59:\\layout\\item_ciclo_produccion_hist.xml",
+        "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-62:\\layout\\item_ciclo_produccion_hist.xml"
+    },
+    {
+        "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-59:\\layout\\item_ciclo_produccion.xml",
+        "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-62:\\layout\\item_ciclo_produccion.xml"
+    },
+    {
+        "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-59:\\layout\\item_ingreso.xml",
+        "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-62:\\layout\\item_ingreso.xml"
+    },
+    {
+        "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-59:\\layout\\fragment_produccion_edit.xml",
+        "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-62:\\layout\\fragment_produccion_edit.xml"
+    },
+    {
+        "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-59:\\layout\\fragment_ingreso_lista.xml",
+        "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-62:\\layout\\fragment_ingreso_lista.xml"
+    },
+    {
+        "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-59:\\layout\\fragment_ingreso_edit.xml",
+        "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-62:\\layout\\fragment_ingreso_edit.xml"
+    },
+    {
+        "merged": "eu.villacristina.lechugapro.app-mergeDebugResources-59:/layout/fragment_ingresos_tab.xml",
+        "source": "eu.villacristina.lechugapro.app-main-62:/layout/fragment_ingresos_tab.xml"
+    },
+    {
+        "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-59:\\layout\\fragment_gastos_tab.xml",
+        "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-62:\\layout\\fragment_gastos_tab.xml"
+    },
+    {
+        "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-59:\\layout\\fragment_cliente_edit.xml",
+        "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-62:\\layout\\fragment_cliente_edit.xml"
+    },
+    {
+        "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-59:\\layout\\fragment_produccion_historial.xml",
+        "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-62:\\layout\\fragment_produccion_historial.xml"
+    },
+    {
+        "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-59:\\layout\\item_gasto_editable.xml",
+        "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-62:\\layout\\item_gasto_editable.xml"
+    },
+    {
+        "merged": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-mergeDebugResources-59:\\layout\\fragment_ganancia_tab.xml",
+        "source": "C:\\Users\\marco\\.gradle\\daemon\\8.13\\eu.villacristina.lechugapro.app-main-62:\\layout\\fragment_ganancia_tab.xml"
+    }
+]

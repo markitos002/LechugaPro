@@ -160,7 +160,7 @@ val MIGRATION_10_11 = object : Migration(10, 11) {
             )
             """.trimIndent()
         )
-        db.execSQL("CREATE INDEX IF NOT EXISTS index_gastos_id_ciclo ON gastos(id_ciclo)")
+    // Índices: no crear índice para alinear con la entidad actual
     }
 }
 
@@ -191,8 +191,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun gastoDao(): GastoDao
 
         suspend fun seedGastosTiposIfEmpty() {
-            // Tipos fijos iniciales
-            val tipos = listOf("Preparación terreno", "Potasio", "Fungicida", "Cal", "Abono")
+        // Tipos fijos iniciales (asegurar Plantulas primero)
+        val tipos = listOf("Plantulas", "Preparación terreno", "Potasio", "Fungicida", "Cal", "Abono")
             // Si no hay registros, crear uno por tipo con importe 0 y fecha hoy, id_ciclo = 0 (global)
             if (gastoDao().getTodosGastos().isEmpty()) {
                 val hoy = System.currentTimeMillis()
@@ -201,6 +201,11 @@ abstract class AppDatabase : RoomDatabase() {
                         gastoDao().insertGasto(Gasto(idCiclo = 0, tipo = t, importe = 0.0, fecha = hoy))
                     } catch (_: Exception) { }
                 }
+            }
+            // Si ya hay datos, asegurar al menos Plantulas
+            else if (gastoDao().countByTipo("Plantulas") == 0) {
+                val hoy = System.currentTimeMillis()
+                try { gastoDao().insertGasto(Gasto(idCiclo = 0, tipo = "Plantulas", importe = 0.0, fecha = hoy)) } catch (_: Exception) { }
             }
         }
 }
