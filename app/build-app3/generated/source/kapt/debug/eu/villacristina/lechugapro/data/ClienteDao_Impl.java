@@ -132,7 +132,7 @@ public final class ClienteDao_Impl implements ClienteDao {
   }
 
   @Override
-  public Object insert(final Cliente cliente, final Continuation<? super Unit> arg1) {
+  public Object insert(final Cliente cliente, final Continuation<? super Unit> $completion) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -146,11 +146,11 @@ public final class ClienteDao_Impl implements ClienteDao {
           __db.endTransaction();
         }
       }
-    }, arg1);
+    }, $completion);
   }
 
   @Override
-  public Object delete(final Cliente cliente, final Continuation<? super Unit> arg1) {
+  public Object delete(final Cliente cliente, final Continuation<? super Unit> $completion) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -164,11 +164,11 @@ public final class ClienteDao_Impl implements ClienteDao {
           __db.endTransaction();
         }
       }
-    }, arg1);
+    }, $completion);
   }
 
   @Override
-  public Object update(final Cliente cliente, final Continuation<? super Unit> arg1) {
+  public Object update(final Cliente cliente, final Continuation<? super Unit> $completion) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -182,7 +182,7 @@ public final class ClienteDao_Impl implements ClienteDao {
           __db.endTransaction();
         }
       }
-    }, arg1);
+    }, $completion);
   }
 
   @Override

@@ -98,7 +98,7 @@ public final class GastoDao_Impl implements GastoDao {
   }
 
   @Override
-  public Object insertGasto(final Gasto gasto, final Continuation<? super Long> arg1) {
+  public Object insertGasto(final Gasto gasto, final Continuation<? super Long> $completion) {
     return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
       @Override
       @NonNull
@@ -112,11 +112,11 @@ public final class GastoDao_Impl implements GastoDao {
           __db.endTransaction();
         }
       }
-    }, arg1);
+    }, $completion);
   }
 
   @Override
-  public Object deleteGasto(final Gasto gasto, final Continuation<? super Unit> arg1) {
+  public Object deleteGasto(final Gasto gasto, final Continuation<? super Unit> $completion) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -130,11 +130,11 @@ public final class GastoDao_Impl implements GastoDao {
           __db.endTransaction();
         }
       }
-    }, arg1);
+    }, $completion);
   }
 
   @Override
-  public Object updateGasto(final Gasto gasto, final Continuation<? super Unit> arg1) {
+  public Object updateGasto(final Gasto gasto, final Continuation<? super Unit> $completion) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -148,12 +148,12 @@ public final class GastoDao_Impl implements GastoDao {
           __db.endTransaction();
         }
       }
-    }, arg1);
+    }, $completion);
   }
 
   @Override
   public Object getGastosPorCiclo(final long cicloId,
-      final Continuation<? super List<Gasto>> arg1) {
+      final Continuation<? super List<Gasto>> $completion) {
     final String _sql = "SELECT * FROM gastos WHERE id_ciclo = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
@@ -196,11 +196,11 @@ public final class GastoDao_Impl implements GastoDao {
           _statement.release();
         }
       }
-    }, arg1);
+    }, $completion);
   }
 
   @Override
-  public Object getTodosGastos(final Continuation<? super List<Gasto>> arg0) {
+  public Object getTodosGastos(final Continuation<? super List<Gasto>> $completion) {
     final String _sql = "SELECT * FROM gastos";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
@@ -241,7 +241,7 @@ public final class GastoDao_Impl implements GastoDao {
           _statement.release();
         }
       }
-    }, arg0);
+    }, $completion);
   }
 
   @NonNull

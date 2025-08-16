@@ -254,7 +254,7 @@ public final class CicloProduccionDao_Impl implements CicloProduccionDao {
   }
 
   @Override
-  public Object insert(final CicloProduccion ciclo, final Continuation<? super Long> arg1) {
+  public Object insert(final CicloProduccion ciclo, final Continuation<? super Long> $completion) {
     return CoroutinesRoom.execute(__db, true, new Callable<Long>() {
       @Override
       @NonNull
@@ -268,11 +268,11 @@ public final class CicloProduccionDao_Impl implements CicloProduccionDao {
           __db.endTransaction();
         }
       }
-    }, arg1);
+    }, $completion);
   }
 
   @Override
-  public Object update(final CicloProduccion ciclo, final Continuation<? super Unit> arg1) {
+  public Object update(final CicloProduccion ciclo, final Continuation<? super Unit> $completion) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -286,11 +286,11 @@ public final class CicloProduccionDao_Impl implements CicloProduccionDao {
           __db.endTransaction();
         }
       }
-    }, arg1);
+    }, $completion);
   }
 
   @Override
-  public Object archivar(final long id, final Continuation<? super Unit> arg1) {
+  public Object archivar(final long id, final Continuation<? super Unit> $completion) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -311,12 +311,12 @@ public final class CicloProduccionDao_Impl implements CicloProduccionDao {
           __preparedStmtOfArchivar.release(_stmt);
         }
       }
-    }, arg1);
+    }, $completion);
   }
 
   @Override
   public Object updateEstado(final long id, final String estado,
-      final Continuation<? super Unit> arg2) {
+      final Continuation<? super Unit> $completion) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -343,11 +343,11 @@ public final class CicloProduccionDao_Impl implements CicloProduccionDao {
           __preparedStmtOfUpdateEstado.release(_stmt);
         }
       }
-    }, arg2);
+    }, $completion);
   }
 
   @Override
-  public Object deleteById(final long id, final Continuation<? super Unit> arg1) {
+  public Object deleteById(final long id, final Continuation<? super Unit> $completion) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       @NonNull
@@ -368,7 +368,7 @@ public final class CicloProduccionDao_Impl implements CicloProduccionDao {
           __preparedStmtOfDeleteById.release(_stmt);
         }
       }
-    }, arg1);
+    }, $completion);
   }
 
   @Override
@@ -795,7 +795,7 @@ public final class CicloProduccionDao_Impl implements CicloProduccionDao {
 
   @Override
   public Object existsByNumeroCiclo(final int numero, final Long excludeId,
-      final Continuation<? super Boolean> arg2) {
+      final Continuation<? super Boolean> $completion) {
     final String _sql = "SELECT EXISTS(SELECT 1 FROM ciclos_produccion WHERE numeroCiclo = ? AND (? IS NULL OR id != ?))";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 3);
     int _argIndex = 1;
@@ -837,7 +837,7 @@ public final class CicloProduccionDao_Impl implements CicloProduccionDao {
           _statement.release();
         }
       }
-    }, arg2);
+    }, $completion);
   }
 
   @NonNull
