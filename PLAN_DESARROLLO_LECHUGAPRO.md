@@ -77,9 +77,12 @@
 *   [x] **Balance**: TabLayout + ViewPager2 con 3 pestañas (Ingresos, Gastos, Ganancia)
 *   [x] **Gastos**: Tabla editable global (RecyclerView) con guardado automático de importe/fecha
 *   [x] **Gastos - UX**: DatePicker en campo fecha (bloqueando entrada manual)
-*   [x] **Datos iniciales**: Semilla automática de tipos fijos (Preparación terreno, Potasio, Fungicida, Cal, Abono) si la tabla está vacía
-*   [ ] **Gastos - Mejora**: Filtrar los gastos por ciclo activo (en lugar de globales)
-*   [ ] **Gastos - Mejora**: Añadir botón para agregar nuevos tipos a la tabla
+*   [x] **Datos iniciales**: Semilla automática de tipos fijos (Preparación terreno, Potasio, Fungicida, Cal, Abono; incluye "Plantulas") si la tabla está vacía
+*   [x] **Gastos - Mejora**: Filtrar los gastos por ciclo activo (fallback a global si no hay activo)
+*   [x] **Gastos - Mejora**: Añadir botón (FAB) para agregar nuevos tipos a la tabla
+*   [x] **Gastos - Validación**: Evitar duplicados por ámbito (ciclo/global) y toasts de estado (sin ciclo activo / lista vacía)
+*   [x] **Ingresos - Resumen**: Pestaña Ingresos muestra totales por cliente (lista ordenada desc.)
+*   [x] **Ganancia**: Cálculo y UI (ingresos totales − gastos del ciclo activo o globales), botón Refrescar
 
 ## Fase 4: Sincronización de Datos (Local a Servidor) - Funcionalidad Avanzada
 *(Tareas futuras sin cambios)*
@@ -108,6 +111,7 @@
 4. Filtro por estado de pago (Pagado / En deuda) en historial.
 5. Validar importe (mínimo >0, opcional máximo configurable) y formato regional.
 6. Tests repositorio/flujo (insertar, actualizar, borrar) y migración `estado_pago`.
+7. Navegación desde Balance → pestaña Ingresos: al tocar un cliente, abrir `ClienteDetalleFragment` pasando `idCliente` (Safe Args).
 
 ### Cross-cutting
 1. Extraer formatos de fecha a util central y permitir configuración futura.
@@ -131,4 +135,9 @@
 4. Internacionalización de textos (Clientes/Incomes/Export) y strings.xml; revisar accesibilidad/contrastes.
 5. Tests unitarios y de integración: ingresos (crud, filtros, migración `estado_pago`), producción (archivado y recordatorios).
 6. CI básico (build + tests) con GitHub Actions y linter (ktlint o detekt).
- 7. Comercialización - Gastos: filtro por ciclo activo y botón para agregar nuevos tipos (pendientes)
+ 7. Balance - Ingresos: onClick en el resumen por cliente para navegar al detalle del cliente (Safe Args con `idCliente`).
+
+---
+
+## Pendientes para mañana
+1. Balance → pestaña Ingresos: al tocar un cliente en el resumen, navegar a `ClienteDetalleFragment` pasando `idCliente` (Navigation + Safe Args).
